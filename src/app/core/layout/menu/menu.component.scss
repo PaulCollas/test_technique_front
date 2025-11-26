@@ -1,0 +1,18 @@
+.p-menubar {
+  position: relative;
+}
+
+.menubar-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+  font-family: 'Gilroy-Bold', 'Gilroy', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 640px) {
+  .menubar-title { display:none; }
+}
