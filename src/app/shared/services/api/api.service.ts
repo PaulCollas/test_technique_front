@@ -1,4 +1,7 @@
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
 
 export class ApiService {
 
@@ -18,8 +21,16 @@ export class ApiService {
     }
   }
 
-  getRegionsByName(regionName: string) {
+  getRegions() {
+    this.checkBaseUrl();
 
+    const url = `${this.BASE_GEO_API_URL}/regions`;
+    return this.http.get(url, { headers: this.getHeaders() });
+  }
+
+
+
+  getRegionsByName(regionName: string) {
     this.checkBaseUrl();
 
     const url = `${this.BASE_GEO_API_URL}/regions?nom=${regionName}`;
@@ -28,7 +39,6 @@ export class ApiService {
 
 
   getDepartmentsByRegionCode(regionCode: string) {
-
     this.checkBaseUrl();
 
     const url = `${this.BASE_GEO_API_URL}/regions/${regionCode}/departements`;
