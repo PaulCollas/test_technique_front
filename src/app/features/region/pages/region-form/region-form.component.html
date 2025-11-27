@@ -1,0 +1,20 @@
+<div class="region-page">
+  <h1 class="region-title">Recherche de région</h1>
+  <p class="region-desc">
+    Tapez le nom d'une région pour sélectionner la région souhaitée.
+  </p>
+
+  <div class="card flex justify-center">
+    <app-test-technique-autocomplete
+      [(ngModel)]="selectedRegion"
+      [suggestions]="filteredRegions"
+      (complete)="filterRegion($event)"
+      optionLabel="nom"
+      placeholder="Ex: Normandie"
+      emptyMessage="Aucune région trouvée"
+      [dropdown]="true"
+      inputId="region-autocomplete"
+    >
+    </app-test-technique-autocomplete>
+  </div>
+</div>

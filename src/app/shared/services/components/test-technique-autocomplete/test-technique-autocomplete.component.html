@@ -1,0 +1,24 @@
+<p-autocomplete
+  [(ngModel)]="value"
+  [suggestions]="suggestions"
+  [optionLabel]="optionLabel"
+  [placeholder]="placeholder"
+  [dropdown]="dropdown"
+  [emptyMessage]="emptyMessage"
+  [inputId]="inputId"
+  [disabled]="disabled"
+  (completeMethod)="onComplete($event)"
+  (ngModelChange)="onModelChange($event)"
+>
+
+  <!-- Accessible template for items -->
+  <ng-template pTemplate="item" let-item>
+    <span>{{ item[optionLabel] }}</span>
+  </ng-template>
+
+  <!-- Selected value shown in input -->
+  <ng-template pTemplate="selectedItem" let-item>
+    <span>{{ item[optionLabel] }}</span>
+  </ng-template>
+
+</p-autocomplete>
