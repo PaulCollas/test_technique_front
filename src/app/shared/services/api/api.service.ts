@@ -28,15 +28,12 @@ export class ApiService {
     return this.http.get(url, { headers: this.getHeaders() });
   }
 
-
-
   getRegionsByName(regionName: string) {
     this.checkBaseUrl();
 
     const url = `${this.BASE_GEO_API_URL}/regions?nom=${regionName}`;
     return this.http.get(url, { headers: this.getHeaders() });
   }
-
 
   getDepartmentsByRegionCode(regionCode: string) {
     this.checkBaseUrl();
