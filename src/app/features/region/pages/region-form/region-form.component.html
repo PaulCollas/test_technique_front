@@ -1,12 +1,20 @@
-<div class="region-page">
-  <h1 class="region-title">Recherche de région</h1>
-  <p class="region-desc">
-    Tapez le nom d'une région pour sélectionner la région souhaitée.
-  </p>
+<!-- Main page container centered horizontally -->
+<div class="region-page flex justify-center">
+  <!-- Vertical layout container that centers all elements and keeps consistent width -->
+  <div class="flex flex-col items-center text-center w-full max-w-lg gap-4">
+    <!-- Page title -->
+    <h1 class="region-title">Recherche de région</h1>
 
-  <div class="card flex justify-center">
+    <!-- First description -->
+    <p class="region-desc">
+      Tapez le nom d'une région pour sélectionner la région souhaitée.
+    </p>
+
+    <!-- Autocomplete component (aligned with title thanks to max-w container) -->
     <app-test-technique-autocomplete
+      class="flex-center"
       [(ngModel)]="selectedRegion"
+      (ngModelChange)="onRegionSelected($event)"
       [suggestions]="filteredRegions"
       (complete)="filterRegion($event)"
       optionLabel="nom"
@@ -14,7 +22,30 @@
       emptyMessage="Aucune région trouvée"
       [dropdown]="true"
       inputId="region-autocomplete"
-    >
-    </app-test-technique-autocomplete>
+    ></app-test-technique-autocomplete>
+
+    <!-- Second description -->
+    <p class="region-desc">
+      Veuillez sélectionner un département associé à cette région :
+    </p>
+
+    <div class="flex-center card flex items-center gap-2 flex-wrap">
+      @if (selectedRegion) {
+        @for (dept of departments; track $index) {
+          <app-test-technique-chips
+            [href]="linkDepartementsBase + dept.code"
+            [label]="dept.nom"
+          ></app-test-technique-chips>
+        }
+
+      <!-- If there are no departments returned, show a message -->
+      @if (departments.length === 0) {
+      <div class="no-departments">
+        Aucun département trouvé pour cette région
+      </div>
+      } } @else {
+      <i>Aucune région sélectionnée</i>
+      }
+    </div>
   </div>
 </div>
