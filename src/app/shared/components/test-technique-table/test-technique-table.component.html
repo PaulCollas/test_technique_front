@@ -1,0 +1,36 @@
+<p-toast></p-toast>
+
+<p-table
+  [value]="value"
+  [paginator]="paginator"
+  [rows]="rows"
+  [tableStyle]="{ 'min-width': '50rem' }"
+>
+  <ng-template pTemplate="header">
+    @for (col of columns; track $index) {
+    <th>{{ col.header }}</th>
+    }
+  </ng-template>
+
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      @for (col of columns; track $index) {
+      <td>
+        @if (col.action === 'maps') {
+        <ng-container>
+          <a
+            (click)="openMapWithDelay(row)"
+            class="cursor-pointer"
+            aria-label="Ouvrir {{ getValue(row, 'nom') }} dans Google Maps"
+          >
+            <i class="pi pi-map-marker map-icon" aria-hidden="true"></i>
+          </a>
+        </ng-container>
+        } @else {
+          {{ getValue(row, col.field) }}
+        }
+      </td>
+      }
+    </tr>
+  </ng-template>
+</p-table>
