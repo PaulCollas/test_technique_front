@@ -33,7 +33,7 @@ export class RegionFormComponent implements OnInit {
   filteredRegions: Region[] = [];
   /** The list of departments returned when a region is selected */
   departments: Department[] = [];
-  linkDepartementsBase = '/departement/';
+  linkDepartementsBase = 'department/';
 
   constructor(private api: ApiService) { }
 
@@ -64,8 +64,7 @@ export class RegionFormComponent implements OnInit {
 
         // Ensure we have an array and map to a simple shape
         const arr = Array.isArray(data) ? data : [];
-        this.departments = arr.map((department: Department) => ({ nom: department.nom, code: department.code, codeRegion: department.codeRegion}));
-        this
+        this.departments = arr.map((department: Department) => ({ nom: department.nom, code: department.code, codeRegion: department.codeRegion }));
       },
       error: (err: unknown) => {
         console.error('Failed to load departments for region', region, err);
