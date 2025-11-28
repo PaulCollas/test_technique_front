@@ -2,16 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Commune } from '../../model/commune.model';
 import { ApiService } from '../../../../shared/services/api/api.service';
+import { Breadcrumb } from 'primeng/breadcrumb';
+import { MenuItem } from 'primeng/api';
 import { TestTechniqueTableComponent } from '../../../../shared/components/test-technique-table/test-technique-table.component';
 
 @Component({
   selector: 'app-department-list',
   templateUrl: './department-list.component.html',
   styleUrls: ['./department-list.component.scss'],
-  imports: [TestTechniqueTableComponent],
+  imports: [TestTechniqueTableComponent, Breadcrumb],
 })
 
 export class DepartmentListComponent implements OnInit {
+
+  items: MenuItem[] = [{ label: 'Départements' }, { label: 'Liste des communes' }];
+
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
+
 
   allCommunes: Commune[] = [];
   communeColumns = [
