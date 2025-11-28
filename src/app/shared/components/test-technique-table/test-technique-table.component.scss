@@ -1,0 +1,16 @@
+/* Table specific small styles */
+.map-icon {
+	font-size: 1.25rem;
+	color: var(--primary-color, #1e88e5);
+	display: inline-block;
+}
+
+.map-icon:hover {
+	color: var(--primary-color-dark, #005cb3);
+}
+
+.chip-link {
+	display: inline-flex;
+	align-items: center;
+}
+

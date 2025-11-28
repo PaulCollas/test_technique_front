@@ -6,7 +6,12 @@
     <h1 class="department-title">Liste des communes</h1>
 
     <!-- Table -->
-
+    <app-test-technique-table
+      [value]="allCommunes"
+      [paginator]="true"
+      [rows]="6"
+      [columns]="communeColumns"
+    ></app-test-technique-table>
 
 
   </div>
