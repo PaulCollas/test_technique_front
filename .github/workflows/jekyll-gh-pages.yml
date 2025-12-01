@@ -15,7 +15,7 @@ jobs:
 
       # Déploiement avec ton action
       - name: Deploy Test Technique Front
-        uses: PaulCollas/test_technique_front@v1.0.0
+        uses: PaulCollas/test_technique_front@main
         with:
           checkout: true
           path: dist/test-technique-front/browser
