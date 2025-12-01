@@ -1,6 +1,6 @@
-name: Deploy Test Technique Front
+name: Deploy Angular App
 
-# Déclenchement du workflow sur push dans la branche main
+# Déclenche le workflow à chaque push sur la branche main
 on:
   push:
     branches:
@@ -9,16 +9,29 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      # Checkout du code
-      - uses: actions/checkout@v4
 
-      # Déploiement avec ton action
-      - name: Deploy Test Technique Front
-        uses: PaulCollas/test_technique_front@main
+    steps:
+      # 1️⃣ Checkout du code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Installer Node.js (v20 pour Angular 20)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          checkout: true
-          path: dist/test-technique-front/browser
-          install_command: npm ci
-          build_command: npm run build -- --base-href=/test-technique-front/
-          caching: true
+          node-version: '20'
+
+      # 3️⃣ Installer les dépendances
+      - name: Install dependencies
+        run: npm ci
+
+      # 4️⃣ Build Angular avec base-href pour GitHub Pages
+      - name: Build Angular
+        run: npm run build -- --base-href=/test-technique-front/
+
+      # 5️⃣ Déployer sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/test-technique-front/browser
