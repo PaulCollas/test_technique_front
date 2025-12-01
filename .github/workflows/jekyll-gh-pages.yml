@@ -1,16 +1,24 @@
-- name: Deploy Test Technique Front
-  uses: PaulCollas/test_technique_front@v1.0.0
-  with:
-    checkout: true
+name: Deploy Test Technique Front
 
-    # dossier généré par Angular 20
-    path: dist/test-technique-front/browser
+# Déclenchement du workflow sur push dans la branche main
+on:
+  push:
+    branches:
+      - main
 
-    # installation des deps
-    install_command: npm ci
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout du code
+      - uses: actions/checkout@v4
 
-    # build Angular 20 + base-href pour GitHub Pages
-    build_command: npm run build -- --base-href=/test-technique-front/
-
-    # cache npm
-    caching: true
+      # Déploiement avec ton action
+      - name: Deploy Test Technique Front
+        uses: PaulCollas/test_technique_front@v1.0.0
+        with:
+          checkout: true
+          path: dist/test-technique-front/browser
+          install_command: npm ci
+          build_command: npm run build -- --base-href=/test-technique-front/
+          caching: true
