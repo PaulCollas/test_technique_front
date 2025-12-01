@@ -3,7 +3,7 @@
   <!-- Vertical layout container that centers all elements and keeps consistent width -->
   <div class="flex flex-col items-center text-center w-full max-w-lg gap-4">
 
-    <p-breadcrumb [home]="home" [model]="items" />
+    <p-breadcrumb [home]="home" [model]="items" class="breadcrumb-department"/>
 
     <!-- Page title -->
     <h1 class="department-title">Liste des communes</h1>
@@ -12,7 +12,7 @@
     <app-test-technique-table
       [value]="allCommunes"
       [paginator]="true"
-      [rows]="6"
+      [rows]="5"
       [columns]="communeColumns"
     ></app-test-technique-table>
 

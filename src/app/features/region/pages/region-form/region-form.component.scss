@@ -5,15 +5,21 @@
 }
 
 .region-title {
-	font-size: 1.8rem;
+	font-size: 3rem;
 	margin-bottom: 0.5rem;
 	text-align: center;
+	font-family: var(--ff-unbounded, 'Unbounded', sans-serif);
+	color: #ffffff;
 }
 
 .region-desc {
 	text-align: center;
-	color: rgba(0,0,0,0.7);
+	color: #ffffff;
 	margin-bottom: 1rem;
+}
+
+.no-region-txt {
+  font-family: var(--ff-poppins);
 }
 
 .flex-center {

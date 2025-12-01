@@ -8,6 +8,20 @@
 	font-size: 1.8rem;
 	margin-bottom: 0.5rem;
 	text-align: center;
+	font-family: var(--ff-unbounded, 'Unbounded', sans-serif);
+	color: #ffffff;
+}
+
+.breadcrumb-department {
+  font-family: var(--ff-poppins);
+}
+
+// Change background of breadcrumb to transparent and remove borders/shadows
+
+:host ::ng-deep .p-breadcrumb {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .department-desc {
