@@ -1,59 +1,236 @@
-# TestTechniqueFront
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.3.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
 
-## Development server
+  <h3 align="center">Test technique Frontend</h3>
 
-To start a local development server, run:
+  <p align="center">
+    Projet technique sur Angular
+    <br />
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template">Voir le prototype FIGMA</a>
+    &middot;
+    <a href="https://github.com/othneildrew/Best-README-Template">Voir la démo</a>
+  </p>
+</div>
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Sommaire</summary>
+  <ol>
+    <li>
+      <a href="#a-propos-du+projet">A propos du projet</a>
+      <ul>
+        <li><a href="#built-with">Prérequis</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Documentation</a></li>
+    <li><a href="#usage">Utilisation</a></li>
+    <li><a href="#roadmap">Futures évolutions</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Ressources externes
+</a></li>
+  </ol>
+</details>
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
-```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+<!-- ABOUT THE PROJECT -->
+## 🖥️ A propos du projet
 
-```bash
-ng generate --help
-```
+![image](./src/assets/documentation/banniere.png)
 
-## Building
+Ce projet est une application Angular développée pour un test technique frontend.
+Elle met en œuvre plusieurs fonctionnalités :
 
-To build the project run:
+- Recherche de régions via API
+- Sélection dynamique des départements
+- Affichage des communes dans un composant tableau personnalisé
+- Intégration de composants Angular + PrimeNG
+- Mise en place d’un design conforme au prototype (typographies, mises en page, vidéo de fond…)
 
-```bash
-ng build
-```
+Le but est de démontrer :
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+✔️ la maîtrise d’Angular
+<br>
+✔️ l’intégration et personnalisation UI / UX
+<br>
+✔️ l’architecture standalone et signals
+<br>
+✔️ l’usage cohérent de composants réutilisables
 
-## Running unit tests
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
+### Prérequis
 
-For end-to-end (e2e) testing, run:
+1. **Node.js** (version recommandée : LTS)  
+  👉 https://nodejs.org/
 
-```bash
-ng e2e
-```
+2. **NPM** (installé automatiquement avec Node)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+3. **Angular CLI** (version 20)
+> npm install -g @angular/cli
 
-## Additional Resources
+### API 
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Récupérer le nom des régions pour l’autocomplétion:
+
+> https://geo.api.gouv.fr/regions?nom=nomDeLaRegion
+
+- Récupérer la liste des départements d’une région :
+
+> https://geo.api.gouv.fr/regions/{code région}/departements
+
+- Récupérer la liste des communes d’un départements :
+
+> https://geo.api.gouv.fr/departements/{code departement}/communes
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## 🎯 Démarrer le projet
+
+Pour lancer le projet :
+
+### Installation
+
+1. Cloner le repository
+   ```sh
+   git clone https://github.com/PaulCollas/test_technique_front.git
+   ```
+2. Installer les NPM packages
+   ```sh
+   npm install
+   ```
+
+### Lancer l'application
+
+1. Lancer l'application Angular :
+   ```sh
+   ng serve
+   ```
+
+2. Lancer la documentation : 
+   ```sh
+   ng serve
+   ```
+
+
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+## 📚 Documentation
+
+Pour ce projet, j'ai rédigé et utilisé la documentation de la manière suivante : 
+
+1. **Figma** (version recommandée : LTS)  
+- *Lien d'accès au Figma* : 
+> [Lien du fichier Figma avec les maquettes, composants, assets etc](https://www.figma.com/design/6BJfLEXFWWNtcXFXLR78io/Test-Technique-Front--PrimeNG-?node-id=2670-9556&t=FdNonksW8DeH1mJi-1)
+
+- *Prototype* : 
+> [Lien du prototype](https://www.figma.com/proto/6BJfLEXFWWNtcXFXLR78io/Test-Technique-Front--PrimeNG-?node-id=2670-9556&t=FdNonksW8DeH1mJi-1)
+
+2. **StoryBook** (version recommandée : LTS)  
+- *Lancer le storybook* : 
+> npm run storybook
+
+- *Accès au storybook* : 
+> http://localhost:6006/
+
+3. **Campodoc** (Documentation technique)  
+- *Lancer le campodoc* : 
+>  npm run compodoc
+- *Accès au campodoc* : 
+Ouvrir l'idex.html dans "documentation" à la racine de ce projet
+
+
+<!-- USAGE EXAMPLES -->
+## 🚀 Utilisation
+
+Une fois lancé, le projet permet :
+
+* de rechercher une région via autocomplétion
+* d’afficher les départements associés
+* d’accéder à la liste de leurs communes
+* d’utiliser un tableau custom PrimeNG enrichi
+* de naviguer entre les pages grâce au routing Angular
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- ROADMAP -->
+## 🗺️ Futures évolutions
+
+- [] Ajouter Changelog
+- [] Finaliser l'intégration StoryBooks
+- [] Ajouter le Multi-language
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
+## 🤝 Contribuer
+
+Les contributions sont les bienvenues !
+
+1. Forker le projet
+2. Créer une branche (git checkout -b feature/NouvelleFeature)
+3. Commit (git commit -m 'Ajout nouvelle fonctionnalité')
+4. Push (git push origin feature/NouvelleFeature)
+5. Ouvrir une Pull Request
+
+
+
+<!-- LICENSE -->
+## 📄 License
+
+Projet distribué sous licence Unlicense.
+Voir le fichier LICENSE.txt pour plus d’informations.
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Paul Collas - [Github](https://github.com/PaulCollas) - paulcollas@studio210.fr
+
+Lien du projet: [Repository](https://github.com/PaulCollas/test_technique_front)
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Ressources externes
+
+Quelques ressources utiles :
+
+* https://angular.io
+* https://primeng.org
+* https://rxjs.dev
+* https://developer.mozilla.org
+* https://fonts.google.com
+* https://shields.io
+
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
