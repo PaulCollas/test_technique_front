@@ -25,18 +25,19 @@
     ></app-test-technique-autocomplete>
 
     <!-- Second description -->
+    @if (selectedRegion?.nom) {
     <p class="region-desc">
       Veuillez sélectionner un département associé à cette région :
     </p>
+    }
 
     <div class="flex-center card flex items-center gap-2 flex-wrap">
-      @if (selectedRegion) {
-        @for (dept of departments; track $index) {
-          <app-test-technique-chips
-            [href]="linkDepartementsBase + dept.code"
-            [label]="dept.nom"
-          ></app-test-technique-chips>
-        }
+      @if (selectedRegion) { @for (dept of departments; track $index) {
+      <app-test-technique-chips
+        [href]="linkDepartementsBase + dept.code"
+        [label]="dept.nom"
+      ></app-test-technique-chips>
+      }
 
       <!-- If there are no departments returned, show a message -->
       @if (departments.length === 0) {
@@ -44,7 +45,7 @@
         Aucun département trouvé pour cette région
       </div>
       } } @else {
-      <i>Aucune région sélectionnée</i>
+      <i class="no-region-txt">Aucune région sélectionnée</i>
       }
     </div>
   </div>

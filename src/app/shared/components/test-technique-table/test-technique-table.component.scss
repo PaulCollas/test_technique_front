@@ -1,12 +1,29 @@
+/* Apply Poppins font to the entire table */
+:host ::ng-deep .table-poppins .p-table,
+:host ::ng-deep .table-poppins .p-datatable,
+:host ::ng-deep .table-poppins table,
+:host ::ng-deep .table-poppins th,
+:host ::ng-deep .table-poppins td,
+:host ::ng-deep .table-poppins a,
+:host ::ng-deep .table-poppins span {
+  font-family: var(--ff-poppins) !important;
+  font-weight: 400;
+  color: #ffffff; // facultatif si tu veux du texte blanc
+}
+
+p-datatable-tbody{
+  font-family: 'Poppins', sans-serif;
+}
+
 /* Table specific small styles */
 .map-icon {
 	font-size: 1.25rem;
-	color: var(--primary-color, #1e88e5);
+	color: #ffffff;
 	display: inline-block;
 }
 
 .map-icon:hover {
-	color: var(--primary-color-dark, #005cb3);
+	color: #4e4e4e;
 }
 
 .chip-link {
