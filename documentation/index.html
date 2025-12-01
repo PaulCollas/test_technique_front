@@ -1,0 +1,411 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>test-technique-front documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">test-technique-front documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content readme">
+                   <div class="content-data">
+
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+
+  <h3 align="center">Test technique Frontend</h3>
+
+  <p align="center">
+    Projet technique sur Angular
+    <br />
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template">Voir le prototype FIGMA</a>
+    &middot;
+    <a href="https://github.com/othneildrew/Best-README-Template">Voir la démo</a>
+  </p>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Sommaire</summary>
+  <ol>
+    <li>
+      <a href="#a-propos-du+projet">A propos du projet</a>
+      <ul>
+        <li><a href="#built-with">Prérequis</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Utilisation</a></li>
+    <li><a href="#usage">Utilisation</a></li>
+    <li><a href="#roadmap">Futures évolutions</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Documentations</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+<h2>🖥️ A propos du projet</h2>
+<p><img src="./src/assets/documentation/banniere.png" alt="image" class="img-responsive"></p>
+<p>Ce projet est une application Angular développée pour un test technique frontend.
+Elle met en œuvre plusieurs fonctionnalités :</p>
+<ul>
+<li>Recherche de régions via API</li>
+<li>Sélection dynamique des départements</li>
+<li>Affichage des communes dans un composant tableau personnalisé</li>
+<li>Intégration de composants Angular + PrimeNG</li>
+<li>Mise en place d’un design conforme au prototype (typographies, mises en page, vidéo de fond…)</li>
+</ul>
+<p>Le but est de démontrer :</p>
+<p>✔️ la maîtrise d’Angular
+<br>
+✔️ l’intégration et personnalisation UI / UX
+<br>
+✔️ l’architecture standalone et signals
+<br>
+✔️ l’usage cohérent de composants réutilisables</p>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<h3>Prérequis</h3>
+<ol>
+<li><p><strong>Node.js</strong> (version recommandée : LTS)<br>  👉 <a href="https://nodejs.org/">https://nodejs.org/</a></p>
+</li>
+<li><p><strong>NPM</strong> (installé automatiquement avec Node)</p>
+</li>
+<li><p><strong>Angular CLI</strong> (version 20)</p>
+<blockquote>
+<p>npm install -g @angular/cli</p>
+</blockquote>
+</li>
+</ol>
+<h3>API</h3>
+<ul>
+<li>Récupérer le nom des régions pour l’autocomplétion:</li>
+</ul>
+<blockquote>
+<p><a href="https://geo.api.gouv.fr/regions?nom=nomDeLaRegion">https://geo.api.gouv.fr/regions?nom=nomDeLaRegion</a></p>
+</blockquote>
+<ul>
+<li>Récupérer la liste des départements d’une région :</li>
+</ul>
+<blockquote>
+<p><a href="https://geo.api.gouv.fr/regions/%7Bcode">https://geo.api.gouv.fr/regions/{code</a> région}/departements</p>
+</blockquote>
+<ul>
+<li>Récupérer la liste des communes d’un départements :</li>
+</ul>
+<blockquote>
+<p><a href="https://geo.api.gouv.fr/departements/%7Bcode">https://geo.api.gouv.fr/departements/{code</a> departement}/communes</p>
+</blockquote>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+<h2>🎯 Démarrer le projet</h2>
+<p>Pour lancer le projet :</p>
+<h3>Installation</h3>
+<ol>
+<li>Cloner le repository<b>Example :</b><div><pre class="line-numbers"><code class="language-sh">git clone https://github.com/PaulCollas/test_technique_front.git</code></pre></div></li>
+<li>Installer les NPM packages<b>Example :</b><div><pre class="line-numbers"><code class="language-sh">npm install</code></pre></div></li>
+</ol>
+<h3>Lancer l&#39;application</h3>
+<ol>
+<li><p>Lancer l&#39;application Angular :</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-sh">ng serve</code></pre></div></li>
+<li><p>Lancer la documentation : </p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-sh">ng serve</code></pre></div></li>
+</ol>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+<h2>📚 Documentation</h2>
+<p>Pour ce projet, j&#39;ai rédigé et utilisé la documentation de la manière suivante : </p>
+<ol>
+<li><strong>Figma</strong> (version recommandée : LTS)</li>
+</ol>
+<ul>
+<li><p><em>Lien d&#39;accès au Figma</em> : </p>
+<blockquote>
+<p><a href="https://www.figma.com/design/6BJfLEXFWWNtcXFXLR78io/Test-Technique-Front--PrimeNG-?node-id=2670-9556&t=FdNonksW8DeH1mJi-1">Lien du fichier Figma avec les maquettes, composants, assets etc</a></p>
+</blockquote>
+</li>
+<li><p><em>Prototype</em> : </p>
+<blockquote>
+<p><a href="https://www.figma.com/proto/6BJfLEXFWWNtcXFXLR78io/Test-Technique-Front--PrimeNG-?node-id=2670-9556&t=FdNonksW8DeH1mJi-1">Lien du prototype</a></p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li><strong>StoryBook</strong> (version recommandée : LTS)</li>
+</ol>
+<ul>
+<li><em>Lancer le storybook</em> : <blockquote>
+<p>npm run storybook</p>
+</blockquote>
+</li>
+<li><em>Accès au storybook</em> : <blockquote>
+<p><a href="http://localhost:6006/">http://localhost:6006/</a></p>
+</blockquote>
+</li>
+</ul>
+<!-- USAGE EXAMPLES -->
+<h2>🚀 Utilisation</h2>
+<p>Une fois lancé, le projet permet :</p>
+<ul>
+<li>de rechercher une région via autocomplétion</li>
+<li>d’afficher les départements associés</li>
+<li>d’accéder à la liste de leurs communes</li>
+<li>d’utiliser un tableau custom PrimeNG enrichi</li>
+<li>de naviguer entre les pages grâce au routing Angular</li>
+</ul>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- ROADMAP -->
+<h2>🗺️ Futures évolutions</h2>
+<ul>
+<li>[] Ajouter Changelog</li>
+<li>[] Finaliser l&#39;intégration StoryBooks</li>
+<li>[] Ajouter le Multi-language</li>
+</ul>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
+<h2>🤝 Contribuer</h2>
+<p>Les contributions sont les bienvenues !</p>
+<ol>
+<li>Forker le projet</li>
+<li>Créer une branche (git checkout -b feature/NouvelleFeature)</li>
+<li>Commit (git commit -m &#39;Ajout nouvelle fonctionnalité&#39;)</li>
+<li>Push (git push origin feature/NouvelleFeature)</li>
+<li>Ouvrir une Pull Request</li>
+</ol>
+<!-- LICENSE -->
+<h2>📄 License</h2>
+<p>Projet distribué sous licence Unlicense.
+Voir le fichier LICENSE.txt pour plus d’informations.</p>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- CONTACT -->
+<h2>Contact</h2>
+<p>Your Name - <a href="https://twitter.com/your_username">@your_twitter</a> - <a href="mailto:email@example.com">email@example.com</a></p>
+<p>Project Link: <a href="https://github.com/your_username/repo_name">https://github.com/your_username/repo_name</a></p>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+<h2>Documentations</h2>
+<p>Quelques ressources utiles :</p>
+<ul>
+<li><a href="https://angular.io">https://angular.io</a></li>
+<li><a href="https://primeng.org">https://primeng.org</a></li>
+<li><a href="https://rxjs.dev">https://rxjs.dev</a></li>
+<li><a href="https://developer.mozilla.org">https://developer.mozilla.org</a></li>
+<li><a href="https://fonts.google.com">https://fonts.google.com</a></li>
+<li><a href="https://shields.io">https://shields.io</a></li>
+</ul>
+<p align="right">(<a href="#readme-top">Retour</a>)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'readme';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

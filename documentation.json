@@ -2,6 +2,273 @@
     "pipes": [],
     "interfaces": [
         {
+            "name": "AutoCompleteCompleteEvent",
+            "id": "interface-AutoCompleteCompleteEvent-d970a5b4cd101b54f29512985b3f8b86fbad3fec62f094a58dacc40bcebf7d93f6314d85a4ca809d9948c2e3de987f9b7bc47fedc0377607687abd8354013a7d",
+            "file": "src/app/features/region/pages/region-form/region-form.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { TestTechniqueAutocompleteComponent } from '../../../../shared/components/test-technique-autocomplete/test-technique-autocomplete.component';\nimport { ApiService } from '../../../../shared/services/api/api.service';\nimport type { Region } from '../../model/region.model';\nimport { TestTechniqueChipsComponent } from \"../../../../shared/components/test-technique-chips/test-technique-chips.component\";\nimport { Department } from '../../../department/model/department.model';\n\n\n/**\n * Event interface used by PrimeNG AutoComplete component.\n */\ninterface AutoCompleteCompleteEvent {\n  originalEvent: Event;\n  query: string;\n}\n\n@Component({\n  selector: 'app-region-form',\n  standalone: true,\n  imports: [CommonModule, TestTechniqueAutocompleteComponent, FormsModule, TestTechniqueChipsComponent],\n  templateUrl: './region-form.component.html',\n  styleUrls: ['./region-form.component.scss']\n})\n\nexport class RegionFormComponent implements OnInit {\n\n  regions: Region[] = [];\n\n  selectedRegion: Region | undefined;\n\n  filteredRegions: Region[] = [];\n  /** The list of departments returned when a region is selected */\n  departments: Department[] = [];\n  linkDepartementsBase = 'department/';\n\n  constructor(private api: ApiService) { }\n\n  /**\n   * Lifecycle hook triggered on component initialization.\n   * Loads region list from the API.\n   */\n  ngOnInit() {\n    this.loadRegions();\n  }\n\n  /**\n   * Called when the bound ngModel changes on the autocomplete: select or clear a region.\n   * If a region is selected we fetch its departments using the ApiService.\n   */\n  onRegionSelected(region?: Region | null): void {\n    this.selectedRegion = region ?? undefined;\n\n    // Clear departments if no region is selected\n    if (!region || !region.code) {\n      this.departments = [];\n      return;\n    }\n\n    // Fetch departments for the selected region\n    this.api.getDepartmentsByRegionCode(region.code).subscribe({\n      next: (data: unknown) => {\n\n        // Ensure we have an array and map to a simple shape\n        const arr = Array.isArray(data) ? data : [];\n        this.departments = arr.map((department: Department) => ({ nom: department.nom, code: department.code, codeRegion: department.codeRegion }));\n      },\n      error: (err: unknown) => {\n        console.error('Failed to load departments for region', region, err);\n        this.departments = [];\n      }\n    });\n  }\n\n  private loadRegions(): void {\n    this.api.getRegions().subscribe({\n      next: (data: Region[] | unknown) => {\n        // Ensures valid array format before assignment\n        this.regions = Array.isArray(data) ? data : [];\n      },\n      error: (err: unknown) => {\n        console.error('Failed to load regions', err);\n      }\n    });\n  }\n\n  /**\n   * Filters the list of regions based on user query in the autocomplete.\n   * @param event - AutoComplete event containing the search query.\n  */\n\n  filterRegion(event: AutoCompleteCompleteEvent): void {\n    const query = event.query?.trim().toLowerCase() ?? '';\n\n    // Early return improves readability and performance for empty queries\n    if (!query) {\n      this.filteredRegions = this.regions;\n      return;\n    }\n\n    // Uses functional methods for clearer logic and immutability\n    this.filteredRegions = this.regions.filter(region =>\n      region.nom.toLowerCase().startsWith(query)\n    );\n  }\n\n}\n",
+            "properties": [
+                {
+                    "name": "originalEvent",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Event",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "query",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "description": "<p>Event interface used by PrimeNG AutoComplete component.</p>\n",
+            "rawdescription": "\n\nEvent interface used by PrimeNG AutoComplete component.\n",
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "Column",
+            "id": "interface-Column-fde320a4fd488f3a3f0d275b85c033f0af252eb6f444dd791af27e971834f803cbe8e75aba312297b946c0458113e66fc7187134f02827284d1e4a0c96d379c6",
+            "file": "src/app/shared/model/column.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface Column {\r\n  field: string;\r\n  header: string;\r\n  width? : string;\r\n  action? : string;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "action",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 5
+                },
+                {
+                    "name": "field",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                },
+                {
+                    "name": "header",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "width",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 4
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "Commune",
+            "id": "interface-Commune-2dd5b8f29b4169cbb4aeae98bc8786e195c142a4d4289c3677e15bf5a01f4634eff67bcadc10fab46ae3ce005ac4bd3a7ce6b39731b7b3b34d27de68f63e708c",
+            "file": "src/app/features/department/model/commune.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface Commune {\r\n  nom: string;\r\n  code: string;\r\n  codeDepartement: string;\r\n  siren: string;\r\n  codeEpci: string;\r\n  codeRegion: string;\r\n  codesPostaux: string[];\r\n  population: number;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "code",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "codeDepartement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "codeEpci",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                },
+                {
+                    "name": "codeRegion",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                },
+                {
+                    "name": "codesPostaux",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "nom",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                },
+                {
+                    "name": "population",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "siren",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 5
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "Department",
+            "id": "interface-Department-1d0c90e3309493c40abd0e106049664171a8f09f3500100210fc3692e8b42e327dcf1fc119619b295871fa5719a404bb96f6fc158584b6d9015807eefc4d6c7d",
+            "file": "src/app/features/department/model/department.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface Department {\r\n  nom: string;\r\n  code: string;\r\n  codeRegion: string;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "code",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "codeRegion",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "nom",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "Region",
+            "id": "interface-Region-6ec8cf4386d4ade6444e6c528fc2eca47a3d143c8ee39a4b76c97b7d53361eef3b1153ef959d3a1fa65504ed84edc4a05c6e777a84fc47d2842bb911d9467c22",
+            "file": "src/app/features/region/model/region.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface Region {\r\n  nom: string;\r\n  code: string;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "code",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "nom",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "User",
             "id": "interface-User-d4821beac0e4a852e513391b7470981c4353fdd95a18628bb68136c8695b489ee15b926e2e5031bc26cf30e1508e0a362c3ee13a06734702b4d15af140e485d5",
             "file": "src/stories/user.ts",
@@ -27,7 +294,184 @@
             "extends": []
         }
     ],
-    "injectables": [],
+    "injectables": [
+        {
+            "name": "ApiService",
+            "id": "injectable-ApiService-1f0074f80f3c9795b61dff828431fd113c47767c3c8c9f30a220f8d65c21fe93de943308e3c4a06704de2dee335b4c31075966b31400aec3a72503994ce4811b",
+            "file": "src/app/shared/services/api/api.service.ts",
+            "properties": [
+                {
+                    "name": "BASE_GEO_API_URL",
+                    "defaultValue": "'https://geo.api.gouv.fr'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 8,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "checkBaseUrl",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "getCommunesByDepartmentCode",
+                    "args": [
+                        {
+                            "name": "departmentCode",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 45,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "departmentCode",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getDepartmentsByRegionCode",
+                    "args": [
+                        {
+                            "name": "regionCode",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 38,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "regionCode",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getHeaders",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "{ 'Content-Type': string; }",
+                    "typeParameters": [],
+                    "line": 12,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "getRegions",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 24,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "getRegionsByName",
+                    "args": [
+                        {
+                            "name": "regionName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 31,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "regionName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { HttpClient } from \"@angular/common/http\";\r\nimport { Injectable } from '@angular/core';\r\n\r\n@Injectable({ providedIn: 'root' })\r\n\r\nexport class ApiService {\r\n\r\n  readonly BASE_GEO_API_URL = 'https://geo.api.gouv.fr';\r\n\r\n  constructor(readonly http: HttpClient) { }\r\n\r\n  private getHeaders() {\r\n    return {\r\n      'Content-Type': 'application/json'\r\n    };\r\n  }\r\n\r\n  private checkBaseUrl() {\r\n    if (!this.BASE_GEO_API_URL) {\r\n      throw new Error('BASE_GEO_API_URL is not defined');\r\n    }\r\n  }\r\n\r\n  getRegions() {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/regions`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  getRegionsByName(regionName: string) {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/regions?nom=${regionName}`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  getDepartmentsByRegionCode(regionCode: string) {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/regions/${regionCode}/departements`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  getCommunesByDepartmentCode(departmentCode: string) {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/departements/${departmentCode}/communes`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n}\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 8,
+                "jsdoctags": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "type": "injectable"
+        }
+    ],
     "guards": [],
     "interceptors": [],
     "classes": [],
@@ -35,7 +479,7 @@
     "components": [
         {
             "name": "App",
-            "id": "component-App-8469449666e5a76bd6aba084361d86982f64e0eb93a6340dd69b4d1b865c42ddeb41d05ad196ab1a87f0b5a91596d886b83ff9e85f8b6a44b951c6adcbf437d6",
+            "id": "component-App-04220d52c9cbea3c34df5dd15e9c0d59e0083c1e601bf661706ef7b87b844d2a8e24774af5b3986b783bd63cdd4b18bf1788b50ced15e081d631475bd3be2d6e",
             "file": "src/app/app.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -43,7 +487,9 @@
             "outputs": [],
             "providers": [],
             "selector": "app-root",
-            "styleUrls": [],
+            "styleUrls": [
+                "./app.scss"
+            ],
             "styles": [],
             "templateUrl": [
                 "./app.html"
@@ -62,7 +508,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 11,
+                    "line": 15,
                     "modifierKind": [
                         124,
                         148
@@ -74,8 +520,20 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
+            "standalone": true,
             "imports": [
+                {
+                    "name": "CoreModule",
+                    "type": "module"
+                },
+                {
+                    "name": "MenuComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "FooterComponent",
+                    "type": "component"
+                },
                 {
                     "name": "RouterOutlet"
                 }
@@ -83,13 +541,17 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, signal } from '@angular/core';\r\nimport { RouterOutlet } from '@angular/router';\r\n\r\n@Component({\r\n  selector: 'app-root',\r\n  imports: [RouterOutlet],\r\n  templateUrl: './app.html',\r\n  styleUrl: './app.scss'\r\n})\r\nexport class App {\r\n  protected readonly title = signal('test_technique_front');\r\n}\r\n",
-            "styleUrl": "./app.scss",
+            "sourceCode": "import { Component, signal } from '@angular/core';\r\nimport { RouterOutlet } from '@angular/router';\r\nimport { CoreModule } from './core/core.module';\r\nimport { MenuComponent } from './core/layout/menu/menu.component';\r\nimport { FooterComponent } from './core/layout/footer/footer.component';\r\n\r\n@Component({\r\n  selector: 'app-root',\r\n  standalone: true,\r\n  imports: [CoreModule, MenuComponent, FooterComponent, RouterOutlet],\r\n  templateUrl: './app.html',\r\n  styleUrls: ['./app.scss']\r\n})\r\nexport class App {\r\n  protected readonly title = signal('test_technique_front');\r\n}\r\n",
             "assetsDirs": [],
-            "styleUrlsData": "",
+            "styleUrlsData": [
+                {
+                    "data": "@import \"primeicons/primeicons.css\";\r\n\r\n:host {\r\n  display: flex;\r\n  flex-direction: column;\r\n  height: 100%;\r\n}\r\n\r\n.app-content {\r\n\tflex: 1 1 auto;\r\n\tdisplay: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n\toverflow-y: auto;\r\n\t-webkit-overflow-scrolling: touch;\r\n}\r\n\r\napp-footer {\r\n  width: 100%;\r\n}\r\n\r\n.video-wrap {\r\n  z-index: -100;\r\n}\r\n\r\n.custom-video {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  object-fit: cover;\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n",
+                    "styleUrl": "./app.scss"
+                }
+            ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<main>\r\n  <div>\r\n    <h1>Test Technique Front</h1>\r\n  </div>\r\n</main>"
+            "templateData": "<app-menu></app-menu>\r\n\r\n<main class=\"app-content\">\r\n  <router-outlet></router-outlet>\r\n</main>\r\n\r\n<div class=\"video-wrap\">\r\n  <video\r\n    src=\"https://www.tooplate.com/templates/2136_kool_form_pack/videos/video.mp4\"\r\n    autoplay=\"\"\r\n    loop=\"\"\r\n    muted=\"\"\r\n    class=\"custom-video\"\r\n    poster=\"\"\r\n  >\r\n    Your browser does not support the video tag.\r\n  </video>\r\n</div>\r\n\r\n<app-footer></app-footer>\r\n"
         },
         {
             "name": "ButtonComponent",
@@ -226,6 +688,229 @@
             }
         },
         {
+            "name": "DepartmentListComponent",
+            "id": "component-DepartmentListComponent-22fa701af2cb83db97bc3cd637727e658649c36b71b59dd3be88d8c82af837473a2bf37a43cc1a293c47d9bb2565b47a7d6c5db15e5c14d74a3963bf411abd27",
+            "file": "src/app/features/department/pages/department-list/department-list.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-department-list",
+            "styleUrls": [
+                "./department-list.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./department-list.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "allCommunes",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Commune[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "communeColumns",
+                    "defaultValue": "[\n    { field: 'nom', header: 'Nom' },\n    { field: 'codesPostaux', header: 'Code postal' },\n    { field: 'population', header: 'Population' },\n    // Special action column that opens Google Maps for the commune\n    { field: 'maps', header: 'Carte', action: 'maps', width: '6rem' },\n  ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "home",
+                    "defaultValue": "{ icon: 'pi pi-home', routerLink: '/' }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "MenuItem",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "items",
+                    "defaultValue": "[{ label: 'Départements' }, { label: 'Liste des communes' }]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "MenuItem[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 34,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [
+                {
+                    "name": "TestTechniqueTableComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "Breadcrumb"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { ActivatedRoute } from '@angular/router';\nimport { Commune } from '../../model/commune.model';\nimport { ApiService } from '../../../../shared/services/api/api.service';\nimport { Breadcrumb } from 'primeng/breadcrumb';\nimport { MenuItem } from 'primeng/api';\nimport { TestTechniqueTableComponent } from '../../../../shared/components/test-technique-table/test-technique-table.component';\n\n@Component({\n  selector: 'app-department-list',\n  templateUrl: './department-list.component.html',\n  styleUrls: ['./department-list.component.scss'],\n  imports: [TestTechniqueTableComponent, Breadcrumb],\n})\n\nexport class DepartmentListComponent implements OnInit {\n\n  items: MenuItem[] = [{ label: 'Départements' }, { label: 'Liste des communes' }];\n\n  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };\n\n\n  allCommunes: Commune[] = [];\n  communeColumns = [\n    { field: 'nom', header: 'Nom' },\n    { field: 'codesPostaux', header: 'Code postal' },\n    { field: 'population', header: 'Population' },\n    // Special action column that opens Google Maps for the commune\n    { field: 'maps', header: 'Carte', action: 'maps', width: '6rem' },\n  ];\n\n  constructor(private api: ApiService, private route: ActivatedRoute) {}\n\n  ngOnInit() {\n    // Get department code from route param and fetch communes\n    this.route.paramMap.subscribe(params => {\n      const code = params.get('code');\n      if (code) {\n        this.api.getCommunesByDepartmentCode(code).subscribe({\n          next: (data: unknown) => {\n            this.allCommunes = Array.isArray(data) ? data as Commune[] : [];\n          },\n          error: (err: unknown) => {\n            console.error('Failed to load communes for department', code, err);\n            this.allCommunes = [];\n          }\n        });\n      }\n    });\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".department-page {\r\n\tmax-width: 900px;\r\n\tmargin: 1.5rem auto;\r\n\tpadding: 0 1rem;\r\n}\r\n\r\n.department-title {\r\n\tfont-size: 1.8rem;\r\n\tmargin-bottom: 0.5rem;\r\n\ttext-align: center;\r\n\tfont-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n\tcolor: #ffffff;\r\n}\r\n\r\n.breadcrumb-department {\r\n  font-family: var(--ff-poppins);\r\n}\r\n\r\n// Change background of breadcrumb to transparent and remove borders/shadows\r\n\r\n:host ::ng-deep .p-breadcrumb {\r\n  background: transparent !important;\r\n  box-shadow: none !important;\r\n  border: none !important;\r\n}\r\n\r\n.department-desc {\r\n\ttext-align: center;\r\n\tcolor: rgba(0,0,0,0.7);\r\n\tmargin-bottom: 1rem;\r\n}\r\n\r\n.flex-center {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-content: center;\r\n}\r\n\r\n.card {\r\n\tpadding: 0.75rem;\r\n\tborder-radius: 8px;\r\n\tbackground-color: rgba(255,255,255,0.02);\r\n\tmin-height: 48px;\r\n}\r\n\r\n.no-departments {\r\n\tcolor: rgba(0,0,0,0.6);\r\n\tfont-style: italic;\r\n\twidth: 100%;\r\n\ttext-align: center;\r\n}\r\n\r\napp-test-technique-chips {\r\n\tmargin: 0.25rem;\r\n}\r\n",
+                    "styleUrl": "./department-list.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "api",
+                        "type": "ApiService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "route",
+                        "type": "ActivatedRoute",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 30,
+                "jsdoctags": [
+                    {
+                        "name": "api",
+                        "type": "ApiService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "route",
+                        "type": "ActivatedRoute",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<!-- Main page container centered horizontally -->\n<div class=\"department-page flex justify-center\">\n  <!-- Vertical layout container that centers all elements and keeps consistent width -->\n  <div class=\"flex flex-col items-center text-center w-full max-w-lg gap-4\">\n\n    <p-breadcrumb [home]=\"home\" [model]=\"items\" class=\"breadcrumb-department\"/>\n\n    <!-- Page title -->\n    <h1 class=\"department-title\">Liste des communes</h1>\n\n    <!-- Table -->\n    <app-test-technique-table\n      [value]=\"allCommunes\"\n      [paginator]=\"true\"\n      [rows]=\"5\"\n      [columns]=\"communeColumns\"\n    ></app-test-technique-table>\n\n\n  </div>\n</div>\n"
+        },
+        {
+            "name": "FooterComponent",
+            "id": "component-FooterComponent-123e40c98b7db08ad8ea2c0d6a632f27c31069ce89a1d580be0c7261721365a853437739022f79da005cd12ada66b2f4359c323fe633a22ca30f55f9e46ae368",
+            "file": "src/app/core/layout/footer/footer.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-footer",
+            "styleUrls": [
+                "./footer.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./footer.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'app-footer',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './footer.component.html',\n  styleUrls: ['./footer.component.scss']\n})\nexport class FooterComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "\r\n\r\n.footer-root {\r\n\tbackground: transparent;\r\n\tcolor: inherit;\r\n\tpadding: 1rem 1rem;\r\n}\r\n\r\n.footer-inner {\r\n\tmax-width: 1100px;\r\n\tmargin: 0 auto;\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\talign-items: center;\r\n\tgap: 0.75rem;\r\n\ttext-align: center;\r\n}\r\n\r\n.footer-title {\r\n\tmargin: 0;\r\n\tfont-weight: 700;\r\n\tfont-size: 1.25rem;\r\n\tfont-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n\tletter-spacing: 0.5px;\r\n\tcolor: #ffffff;\r\n}\r\n\r\n.footer-description {\r\n\tmargin: 0;\r\n\topacity: 0.85;\r\n\tmax-width: 780px;\r\n  color: #ffffff;\r\n}\r\n\r\n.footer-socials {\r\n\tdisplay: flex;\r\n\tgap: 1rem;\r\n\tmargin-top: 0.5rem;\r\n}\r\n\r\n.social-link {\r\n\tdisplay: inline-flex;\r\n\talign-items: center;\r\n\tjustify-content: center;\r\n\twidth: 36px;\r\n\theight: 36px;\r\n\tborder-radius: 9999px;\r\n\tcolor: inherit;\r\n\ttext-decoration: none;\r\n\tborder: 1px solid #f4f4f4;;\r\n\ttransition: transform 120ms ease, background 120ms ease;\r\n}\r\n\r\n.social-link:hover {\r\n\ttransform: translateY(-2px);\r\n\tbackground: rgba(255,255,255,0.12);\r\n}\r\n\r\n.sr-only {\r\n\tposition: absolute !important;\r\n\twidth: 1px;\r\n\theight: 1px;\r\n\tpadding: 0;\r\n\tmargin: -1px;\r\n\toverflow: hidden;\r\n\tclip: rect(0, 0, 0, 0);\r\n\twhite-space: nowrap;\r\n\tborder: 0;\r\n}\r\n\r\n",
+                    "styleUrl": "./footer.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 11
+            },
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<footer class=\"footer-root p-component\">\n  <div class=\"footer-inner\">\n    <h3 class=\"footer-title\">Paul Collas</h3>\n    <p class=\"footer-description\">L'application pour la réalisation du test technique frontend</p>\n\n    <div class=\"footer-socials\" role=\"navigation\" aria-label=\"Réseaux sociaux\">\n      <a class=\"social-link\" href=\"https://studio210.fr/\" target=\"_self\" rel=\"noopener noreferrer\" aria-label=\"Mon site\">\n        <i class=\"pi pi-globe\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">Site</span>\n      </a>\n\n      <a class=\"social-link\" href=\"https://www.linkedin.com/in/paul-collas-5631ab174/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"LinkedIn\">\n        <i class=\"pi pi-linkedin\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">LinkedIn</span>\n      </a>\n\n      <a class=\"social-link\" href=\"https://github.com/PaulCollas\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"GitHub\">\n        <i class=\"pi pi-github\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">GitHub</span>\n      </a>\n    </div>\n  </div>\n</footer>\n"
+        },
+        {
             "name": "HeaderComponent",
             "id": "component-HeaderComponent-48b9abe37706bc42f20cfa97ed9f943678344ea7d254c0c82183c657750c2191b43486fe730c778627b2ea6aa0e2f33a7abcf3ce08b68ad18b062ad99ea97acb",
             "file": "src/stories/header.component.ts",
@@ -310,6 +995,92 @@
             ],
             "stylesData": "",
             "extends": []
+        },
+        {
+            "name": "MenuComponent",
+            "id": "component-MenuComponent-46968a6157d0b4576ee3bd4633ebc27cd0c33f206a35bde5bda3c6aea0f47d918afa4a5e136a8f3d24d2a85e09cb73a2a11a032b625f11d6b035929272fc4a7b",
+            "file": "src/app/core/layout/menu/menu.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-menu",
+            "styleUrls": [
+                "./menu.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./menu.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "Menubar"
+                },
+                {
+                    "name": "BadgeModule",
+                    "type": "module"
+                },
+                {
+                    "name": "AvatarModule",
+                    "type": "module"
+                },
+                {
+                    "name": "InputTextModule",
+                    "type": "module"
+                },
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { Component, OnInit } from '@angular/core';\nimport { AvatarModule } from 'primeng/avatar';\nimport { BadgeModule } from 'primeng/badge';\nimport { InputTextModule } from 'primeng/inputtext';\nimport { Menubar } from 'primeng/menubar';\n\n@Component({\n  selector: 'app-menu',\n  templateUrl: './menu.component.html',\n  styleUrls: ['./menu.component.scss'],\n  standalone: true,\n  imports: [Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule]\n})\nexport class MenuComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".p-menubar {\r\n  position: relative;\r\n  border: none;\r\n  background: none;\r\n}\r\n\r\n.menubar-title {\r\n  position: absolute;\r\n  left: 50%;\r\n  top: 50%;\r\n  transform: translate(-50%, -50%);\r\n  pointer-events: none;\r\n  z-index: 10;\r\n  font-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n  letter-spacing: 0.5px;\r\n  color: #ffffff;\r\n  font-size: 1.25rem;\r\n}\r\n\r\n@media (max-width: 640px) {\r\n  .menubar-title { display:none; }\r\n}\r\n",
+                    "styleUrl": "./menu.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 15
+            },
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<p-menubar>\n  <ng-template #start>\n    <a href=\"/\">\n      <img\n        src=\"https://www.keyconsulting.fr/images/logo.svg\"\n        alt=\"Logo Key Consulting\"\n        class=\"mr-2\"\n      />\n    </a>\n    <div class=\"menubar-title\">\n      <span class=\"text-lg font-bold\">Test technique frontend</span>\n    </div>\n  </ng-template>\n  <ng-template #end>\n    <div class=\"flex items-center gap-2\">\n      <p-avatar\n        image=\"https://avatars.githubusercontent.com/u/63116096?v=4\"\n        shape=\"circle\"\n      />\n    </div>\n  </ng-template>\n</p-menubar>\n"
         },
         {
             "name": "PageComponent",
@@ -404,9 +1175,1347 @@
             ],
             "stylesData": "",
             "extends": []
+        },
+        {
+            "name": "RegionFormComponent",
+            "id": "component-RegionFormComponent-d970a5b4cd101b54f29512985b3f8b86fbad3fec62f094a58dacc40bcebf7d93f6314d85a4ca809d9948c2e3de987f9b7bc47fedc0377607687abd8354013a7d",
+            "file": "src/app/features/region/pages/region-form/region-form.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-region-form",
+            "styleUrls": [
+                "./region-form.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./region-form.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "departments",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Department[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The list of departments returned when a region is selected</p>\n",
+                    "line": 35,
+                    "rawdescription": "\nThe list of departments returned when a region is selected"
+                },
+                {
+                    "name": "filteredRegions",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Region[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 33
+                },
+                {
+                    "name": "linkDepartementsBase",
+                    "defaultValue": "'department/'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 36
+                },
+                {
+                    "name": "regions",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Region[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29
+                },
+                {
+                    "name": "selectedRegion",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Region | undefined",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "filterRegion",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "AutoCompleteCompleteEvent",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 93,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nFilters the list of regions based on user query in the autocomplete.\n",
+                    "description": "<p>Filters the list of regions based on user query in the autocomplete.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 2966,
+                                "end": 2971,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "event"
+                            },
+                            "type": "AutoCompleteCompleteEvent",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 2960,
+                                "end": 2965,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<ul>\n<li>AutoComplete event containing the search query.</li>\n</ul>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "loadRegions",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 76,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 44,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nLifecycle hook triggered on component initialization.\nLoads region list from the API.\n",
+                    "description": "<p>Lifecycle hook triggered on component initialization.\nLoads region list from the API.</p>\n"
+                },
+                {
+                    "name": "onRegionSelected",
+                    "args": [
+                        {
+                            "name": "region",
+                            "type": "Region | null",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 52,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nCalled when the bound ngModel changes on the autocomplete: select or clear a region.\nIf a region is selected we fetch its departments using the ApiService.\n",
+                    "description": "<p>Called when the bound ngModel changes on the autocomplete: select or clear a region.\nIf a region is selected we fetch its departments using the ApiService.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "region",
+                            "type": "Region | null",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "TestTechniqueAutocompleteComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "FormsModule",
+                    "type": "module"
+                },
+                {
+                    "name": "TestTechniqueChipsComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { TestTechniqueAutocompleteComponent } from '../../../../shared/components/test-technique-autocomplete/test-technique-autocomplete.component';\nimport { ApiService } from '../../../../shared/services/api/api.service';\nimport type { Region } from '../../model/region.model';\nimport { TestTechniqueChipsComponent } from \"../../../../shared/components/test-technique-chips/test-technique-chips.component\";\nimport { Department } from '../../../department/model/department.model';\n\n\n/**\n * Event interface used by PrimeNG AutoComplete component.\n */\ninterface AutoCompleteCompleteEvent {\n  originalEvent: Event;\n  query: string;\n}\n\n@Component({\n  selector: 'app-region-form',\n  standalone: true,\n  imports: [CommonModule, TestTechniqueAutocompleteComponent, FormsModule, TestTechniqueChipsComponent],\n  templateUrl: './region-form.component.html',\n  styleUrls: ['./region-form.component.scss']\n})\n\nexport class RegionFormComponent implements OnInit {\n\n  regions: Region[] = [];\n\n  selectedRegion: Region | undefined;\n\n  filteredRegions: Region[] = [];\n  /** The list of departments returned when a region is selected */\n  departments: Department[] = [];\n  linkDepartementsBase = 'department/';\n\n  constructor(private api: ApiService) { }\n\n  /**\n   * Lifecycle hook triggered on component initialization.\n   * Loads region list from the API.\n   */\n  ngOnInit() {\n    this.loadRegions();\n  }\n\n  /**\n   * Called when the bound ngModel changes on the autocomplete: select or clear a region.\n   * If a region is selected we fetch its departments using the ApiService.\n   */\n  onRegionSelected(region?: Region | null): void {\n    this.selectedRegion = region ?? undefined;\n\n    // Clear departments if no region is selected\n    if (!region || !region.code) {\n      this.departments = [];\n      return;\n    }\n\n    // Fetch departments for the selected region\n    this.api.getDepartmentsByRegionCode(region.code).subscribe({\n      next: (data: unknown) => {\n\n        // Ensure we have an array and map to a simple shape\n        const arr = Array.isArray(data) ? data : [];\n        this.departments = arr.map((department: Department) => ({ nom: department.nom, code: department.code, codeRegion: department.codeRegion }));\n      },\n      error: (err: unknown) => {\n        console.error('Failed to load departments for region', region, err);\n        this.departments = [];\n      }\n    });\n  }\n\n  private loadRegions(): void {\n    this.api.getRegions().subscribe({\n      next: (data: Region[] | unknown) => {\n        // Ensures valid array format before assignment\n        this.regions = Array.isArray(data) ? data : [];\n      },\n      error: (err: unknown) => {\n        console.error('Failed to load regions', err);\n      }\n    });\n  }\n\n  /**\n   * Filters the list of regions based on user query in the autocomplete.\n   * @param event - AutoComplete event containing the search query.\n  */\n\n  filterRegion(event: AutoCompleteCompleteEvent): void {\n    const query = event.query?.trim().toLowerCase() ?? '';\n\n    // Early return improves readability and performance for empty queries\n    if (!query) {\n      this.filteredRegions = this.regions;\n      return;\n    }\n\n    // Uses functional methods for clearer logic and immutability\n    this.filteredRegions = this.regions.filter(region =>\n      region.nom.toLowerCase().startsWith(query)\n    );\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".region-page {\r\n\tmax-width: 900px;\r\n\tmargin: 1.5rem auto;\r\n\tpadding: 0 1rem;\r\n}\r\n\r\n.region-title {\r\n\tfont-size: 3rem;\r\n\tmargin-bottom: 0.5rem;\r\n\ttext-align: center;\r\n\tfont-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n\tcolor: #ffffff;\r\n}\r\n\r\n.region-desc {\r\n\ttext-align: center;\r\n\tcolor: #ffffff;\r\n\tmargin-bottom: 1rem;\r\n}\r\n\r\n.no-region-txt {\r\n  font-family: var(--ff-poppins);\r\n}\r\n\r\n.flex-center {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-content: center;\r\n}\r\n\r\n.card {\r\n\tpadding: 0.75rem;\r\n\tborder-radius: 8px;\r\n\tbackground-color: rgba(255,255,255,0.02);\r\n\tmin-height: 48px;\r\n}\r\n\r\n.no-departments {\r\n\tcolor: rgba(0,0,0,0.6);\r\n\tfont-style: italic;\r\n\twidth: 100%;\r\n\ttext-align: center;\r\n}\r\n\r\napp-test-technique-chips {\r\n\tmargin: 0.25rem;\r\n}\r\n",
+                    "styleUrl": "./region-form.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "api",
+                        "type": "ApiService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 36,
+                "jsdoctags": [
+                    {
+                        "name": "api",
+                        "type": "ApiService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<!-- Main page container centered horizontally -->\n<div class=\"region-page flex justify-center\">\n  <!-- Vertical layout container that centers all elements and keeps consistent width -->\n  <div class=\"flex flex-col items-center text-center w-full max-w-lg gap-4\">\n    <!-- Page title -->\n    <h1 class=\"region-title\">Recherche de région</h1>\n\n    <!-- First description -->\n    <p class=\"region-desc\">\n      Tapez le nom d'une région pour sélectionner la région souhaitée.\n    </p>\n\n    <!-- Autocomplete component (aligned with title thanks to max-w container) -->\n    <app-test-technique-autocomplete\n      class=\"flex-center\"\n      [(ngModel)]=\"selectedRegion\"\n      (ngModelChange)=\"onRegionSelected($event)\"\n      [suggestions]=\"filteredRegions\"\n      (complete)=\"filterRegion($event)\"\n      optionLabel=\"nom\"\n      placeholder=\"Ex: Normandie\"\n      emptyMessage=\"Aucune région trouvée\"\n      [dropdown]=\"true\"\n      inputId=\"region-autocomplete\"\n    ></app-test-technique-autocomplete>\n\n    <!-- Second description -->\n    @if (selectedRegion?.nom) {\n    <p class=\"region-desc\">\n      Veuillez sélectionner un département associé à cette région :\n    </p>\n    }\n\n    <div class=\"flex-center card flex items-center gap-2 flex-wrap\">\n      @if (selectedRegion) { @for (dept of departments; track $index) {\n      <app-test-technique-chips\n        [href]=\"linkDepartementsBase + dept.code\"\n        [label]=\"dept.nom\"\n      ></app-test-technique-chips>\n      }\n\n      <!-- If there are no departments returned, show a message -->\n      @if (departments.length === 0) {\n      <div class=\"no-departments\">\n        Aucun département trouvé pour cette région\n      </div>\n      } } @else {\n      <i class=\"no-region-txt\">Aucune région sélectionnée</i>\n      }\n    </div>\n  </div>\n</div>\n"
+        },
+        {
+            "name": "TestTechniqueAutocompleteComponent",
+            "id": "component-TestTechniqueAutocompleteComponent-658a9db3c45a041670dcb8f8116918dd2afacac33b15d326ffded1ff79f0aba621801e61b854d267d825cb4bd26ebd4a3a8afe19bfb13295680ae007f2ba7a5f",
+            "file": "src/app/shared/components/test-technique-autocomplete/test-technique-autocomplete.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": ")"
+                }
+            ],
+            "selector": "app-test-technique-autocomplete",
+            "styleUrls": [
+                "./test-technique-autocomplete.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./test-technique-autocomplete.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "dropdown",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 36,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "emptyMessage",
+                    "defaultValue": "'Aucun résultat trouvé'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 35,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "inputId",
+                    "defaultValue": "`autocomplete-${Math.random().toString(36).substring(2)}`",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 37,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "optionLabel",
+                    "defaultValue": "'label'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 33,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "placeholder",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 34,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "suggestions",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 32,
+                    "type": "any[]",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "complete",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 39,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "disabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 42
+                },
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 44,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 45,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "value",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 41
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onComplete",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 69,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onModelChange",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 63,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 51,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 55,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "disabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 59,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "disabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 47,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "FormsModule",
+                    "type": "module"
+                },
+                {
+                    "name": "AutoComplete"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {\n  Component,\n  forwardRef,\n  Input,\n  Output,\n  EventEmitter\n} from '@angular/core';\nimport {\n  NG_VALUE_ACCESSOR,\n  ControlValueAccessor\n} from '@angular/forms';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { AutoComplete } from 'primeng/autocomplete';\n\n@Component({\n  selector: 'app-test-technique-autocomplete',\n  standalone: true,\n  imports: [CommonModule, FormsModule, AutoComplete],\n  templateUrl: './test-technique-autocomplete.component.html',\n  styleUrls: ['./test-technique-autocomplete.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => TestTechniqueAutocompleteComponent),\n      multi: true\n    }\n  ]\n})\nexport class TestTechniqueAutocompleteComponent implements ControlValueAccessor {\n\n  @Input() suggestions: any[] = [];\n  @Input() optionLabel = 'label';\n  @Input() placeholder = '';\n  @Input() emptyMessage = 'Aucun résultat trouvé';\n  @Input() dropdown = false;\n  @Input() inputId = `autocomplete-${Math.random().toString(36).substring(2)}`;\n\n  @Output() complete = new EventEmitter<any>();\n\n  value: any = null;\n  disabled = false;\n\n  private onChange = (value: any) => {};\n  private onTouched = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n  }\n\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  setDisabledState(disabled: boolean): void {\n    this.disabled = disabled;\n  }\n\n  onModelChange(value: any): void {\n    this.value = value;\n    this.onChange(value);\n    this.onTouched();\n  }\n\n  onComplete(event: any): void {\n    this.complete.emit(event);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".p-autocomplete {\r\n\tmin-width: 220px;\r\n}\r\n\r\n",
+                    "styleUrl": "./test-technique-autocomplete.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [],
+            "implements": [
+                "ControlValueAccessor"
+            ],
+            "templateData": "<p-autocomplete\n  [(ngModel)]=\"value\"\n  [suggestions]=\"suggestions\"\n  [optionLabel]=\"optionLabel\"\n  [placeholder]=\"placeholder\"\n  [dropdown]=\"dropdown\"\n  [emptyMessage]=\"emptyMessage\"\n  [inputId]=\"inputId\"\n  [disabled]=\"disabled\"\n  (completeMethod)=\"onComplete($event)\"\n  (ngModelChange)=\"onModelChange($event)\"\n>\n\n  <!-- Accessible template for items -->\n  <ng-template pTemplate=\"item\" let-item>\n    <span>{{ item[optionLabel] }}</span>\n  </ng-template>\n\n  <!-- Selected value shown in input -->\n  <ng-template pTemplate=\"selectedItem\" let-item>\n    <span>{{ item[optionLabel] }}</span>\n  </ng-template>\n\n</p-autocomplete>\n"
+        },
+        {
+            "name": "TestTechniqueChipsComponent",
+            "id": "component-TestTechniqueChipsComponent-37ebff7b0c6774213388b5354558141eaddf4c01155cbc71efbfa695943c2c26c97b0345e4769b9c0b7e385508719fcd7bef44af95921e169caa0e84089b8bc4",
+            "file": "src/app/shared/components/test-technique-chips/test-technique-chips.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-test-technique-chips",
+            "styleUrls": [
+                "./test-technique-chips.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./test-technique-chips.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "href",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 14,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "label",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "ChipModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { Component, Input, OnInit } from '@angular/core';\nimport { ChipModule } from 'primeng/chip';\n\n@Component({\n  selector: 'app-test-technique-chips',\n  templateUrl: './test-technique-chips.component.html',\n  styleUrls: ['./test-technique-chips.component.scss'],\n  standalone: true,\n  imports: [CommonModule, ChipModule],\n})\nexport class TestTechniqueChipsComponent implements OnInit {\n\n  @Input() href: string = '';\n  @Input() label: string = '';\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./test-technique-chips.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 15
+            },
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<a [href]=\"href\">\n  <p-chip [label]=\"label\" />\n</a>\n"
+        },
+        {
+            "name": "TestTechniqueTableComponent",
+            "id": "component-TestTechniqueTableComponent-74093dd53e14b3a44ced224e008c5332cba95c6174e0717ae8db915bc79024bf958b971c2b0531275dd47b9648895b586df25cfc08523db86597f857628267ed",
+            "file": "src/app/shared/components/test-technique-table/test-technique-table.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "MessageService",
+                    "type": "injectable"
+                }
+            ],
+            "selector": "app-test-technique-table",
+            "styleUrls": [
+                "./test-technique-table.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./test-technique-table.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "columns",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\ncolumn definitions used to render header and body. Example: [{ field: 'nom', header: 'Nom' }]",
+                    "description": "<p>column definitions used to render header and body. Example: [{ field: &#39;nom&#39;, header: &#39;Nom&#39; }]</p>\n",
+                    "line": 29,
+                    "type": "Column[]",
+                    "decorators": []
+                },
+                {
+                    "name": "paginator",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nshow paginator",
+                    "description": "<p>show paginator</p>\n",
+                    "line": 23,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "rows",
+                    "defaultValue": "10",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nnumber of rows for paginator",
+                    "description": "<p>number of rows for paginator</p>\n",
+                    "line": 26,
+                    "type": "number",
+                    "decorators": []
+                },
+                {
+                    "name": "value",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nrows to render in the table",
+                    "description": "<p>rows to render in the table</p>\n",
+                    "line": 20,
+                    "type": "any[]",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "getMapUrl",
+                    "args": [
+                        {
+                            "name": "row",
+                            "type": "Commune",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 45,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "row",
+                            "type": "Commune",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getValue",
+                    "args": [
+                        {
+                            "name": "row",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "field",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 40,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nSafely resolve a property path (dot separated) and format arrays by joining values.\n",
+                    "description": "<p>Safely resolve a property path (dot separated) and format arrays by joining values.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "row",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "field",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "openMapWithDelay",
+                    "args": [
+                        {
+                            "name": "row",
+                            "type": "Commune",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "delayMs",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "3000"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\nBuild a Google Maps search URL for a commune row.",
+                    "description": "<p>Build a Google Maps search URL for a commune row.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "row",
+                            "type": "Commune",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "delayMs",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "3000",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "trackByIndex",
+                    "args": [
+                        {
+                            "name": "_",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 31,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "_",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "TableModule",
+                    "type": "module"
+                },
+                {
+                    "name": "ToastModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { TableModule } from 'primeng/table';\nimport { Column } from '../../model/column.model';\nimport { Commune } from '../../../features/department/model/commune.model';\nimport { MessageService } from 'primeng/api';\nimport { buildGoogleMapsUrl } from '../../utils/maps-url';\nimport { ToastModule } from 'primeng/toast';\n\n@Component({\n  selector: 'app-test-technique-table',\n  standalone: true,\n  imports: [CommonModule, TableModule, ToastModule],\n  templateUrl: './test-technique-table.component.html',\n  styleUrls: ['./test-technique-table.component.scss'],\n  providers: [MessageService]\n})\nexport class TestTechniqueTableComponent {\n  /** rows to render in the table */\n  @Input() value: any[] = [];\n\n  /** show paginator */\n  @Input() paginator = false;\n\n  /** number of rows for paginator */\n  @Input() rows = 10;\n\n  /** column definitions used to render header and body. Example: [{ field: 'nom', header: 'Nom' }] */\n  @Input() columns: Column[] = [];\n\n  trackByIndex(_: number) {\n    return _;\n  }\n\n  constructor(private messageService: MessageService) {}\n\n  /**\n   * Safely resolve a property path (dot separated) and format arrays by joining values.\n   */\n  getValue(row: any, field: string): string {\n    return row?.[field] ?? '';\n  }\n\n\n  getMapUrl(row: Commune): string {\n    return buildGoogleMapsUrl(row);\n  }\n\n  /** Build a Google Maps search URL for a commune row. */\n  openMapWithDelay(row: Commune, delayMs = 3000): void {\n    const url = this.getMapUrl(row);\n    if (!url) return;\n\n\n    this.messageService.add({\n      severity: 'info',\n      summary: 'Redirection…',\n      detail: `Ouverture de Google Maps dans ${delayMs / 1000} secondes`,\n      life: delayMs\n    });\n\n    setTimeout(() => {\n      window.open(url, '_blank');\n    }, delayMs);\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "/* Apply Poppins font to the entire table */\r\n:host ::ng-deep .table-poppins .p-table,\r\n:host ::ng-deep .table-poppins .p-datatable,\r\n:host ::ng-deep .table-poppins table,\r\n:host ::ng-deep .table-poppins th,\r\n:host ::ng-deep .table-poppins td,\r\n:host ::ng-deep .table-poppins a,\r\n:host ::ng-deep .table-poppins span {\r\n  font-family: var(--ff-poppins) !important;\r\n  font-weight: 400;\r\n  color: #ffffff; // facultatif si tu veux du texte blanc\r\n}\r\n\r\np-datatable-tbody{\r\n  font-family: 'Poppins', sans-serif;\r\n}\r\n\r\n/* Table specific small styles */\r\n.map-icon {\r\n\tfont-size: 1.25rem;\r\n\tcolor: #ffffff;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.map-icon:hover {\r\n\tcolor: #4e4e4e;\r\n}\r\n\r\n.chip-link {\r\n\tdisplay: inline-flex;\r\n\talign-items: center;\r\n}\r\n\r\n",
+                    "styleUrl": "./test-technique-table.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "messageService",
+                        "type": "MessageService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 33,
+                "jsdoctags": [
+                    {
+                        "name": "messageService",
+                        "type": "MessageService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "templateData": "<p-toast></p-toast>\n\n<p-table\n  [value]=\"value\"\n  [paginator]=\"paginator\"\n  [rows]=\"rows\"\n  [tableStyle]=\"{ 'min-width': '50rem' }\"\n>\n  <ng-template pTemplate=\"header\">\n    @for (col of columns; track $index) {\n    <th>{{ col.header }}</th>\n    }\n  </ng-template>\n\n  <ng-template pTemplate=\"body\" let-row>\n    <tr>\n      @for (col of columns; track $index) {\n      <td>\n        @if (col.action === 'maps') {\n        <ng-container>\n          <a\n            (click)=\"openMapWithDelay(row)\"\n            class=\"cursor-pointer\"\n            aria-label=\"Ouvrir {{ getValue(row, 'nom') }} dans Google Maps\"\n          >\n            <i class=\"pi pi-external-link map-icon\" aria-hidden=\"true\"></i>\n          </a>\n        </ng-container>\n        } @else {\n          {{ getValue(row, col.field) }}\n        }\n      </td>\n      }\n    </tr>\n  </ng-template>\n</p-table>\n"
         }
     ],
-    "modules": [],
+    "modules": [
+        {
+            "name": "CoreModule",
+            "id": "module-CoreModule-20b0995b239fccc301a4b92e1920ced285930cfe1389e0e2726b48180c36358cb747e26f599f0000e0684155d652ca8b2e29dc4efc3d3e770bc4df3058de802b",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/core/core.module.ts",
+            "methods": [],
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\n@NgModule({\r\n  imports: [CommonModule],\r\n  exports: []\r\n})\r\nexport class CoreModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "DepartmentModule",
+            "id": "module-DepartmentModule-13b8a6ba183b11d9f1f82557bcfba9937f1117b19820cc2212fc9d97e7f2d4a42797e12cc4e2f9261f880888eada5c6bc6717ff7e04c7c2130a910080883d886",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/features/department/department.module.ts",
+            "methods": [],
+            "sourceCode": "import { SharedModule } from './../../shared/shared.module';\r\nimport { DepartmentListComponent } from './pages/department-list/department-list.component';\r\nimport { TestTechniqueTableComponent } from '../../shared/components/test-technique-table/test-technique-table.component';\r\nimport { DepartmentRoutingModule } from './services/department-routing.module';\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\n\r\n@NgModule({\r\n  imports: [CommonModule, SharedModule, DepartmentRoutingModule, TestTechniqueTableComponent, DepartmentListComponent],\r\n  exports: []\r\n})\r\n\r\nexport class DepartmentModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "DepartmentListComponent"
+                        },
+                        {
+                            "name": "DepartmentRoutingModule"
+                        },
+                        {
+                            "name": "SharedModule"
+                        },
+                        {
+                            "name": "TestTechniqueTableComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "DepartmentRoutingModule",
+            "id": "module-DepartmentRoutingModule-3ef498ec0c80dbbff6304a7a28241f8cc6d63aae3a5e5476275fa988ef32e85965a766accf185223c744d4a302b7eac7d734a6cf0bbd5d853d4fd64a776e0996",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/features/department/services/department-routing.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { RouterModule } from \"@angular/router\";\r\nimport { departmentRoute } from \"./department.routes\";\r\n\r\n@NgModule({\r\n  imports: [RouterModule.forChild(departmentRoute)],\r\n  exports: [RouterModule]\r\n})\r\nexport class DepartmentRoutingModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "FeaturesModule",
+            "id": "module-FeaturesModule-c9ab8c3ae1228efef1590b7d4b83d0c435a6fc204101529378ec2ebbc154f9cf784ff8f6eebe402a98a2ada5007fb2b944072f0b4690b127dea954c1387def15",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/features/features.module.ts",
+            "methods": [],
+            "sourceCode": "import { DepartmentModule } from './department/department.module';\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { RegionModule } from \"./region/region.module\";\r\nimport { SharedModule } from \"../shared/shared.module\";\r\n\r\n@NgModule({\r\n  imports: [CommonModule, SharedModule, RegionModule, DepartmentModule],\r\n  exports: [RegionModule, DepartmentModule]\r\n})\r\nexport class FeaturesModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "DepartmentModule"
+                        },
+                        {
+                            "name": "RegionModule"
+                        },
+                        {
+                            "name": "SharedModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "DepartmentModule"
+                        },
+                        {
+                            "name": "RegionModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "LayoutModule",
+            "id": "module-LayoutModule-9be3510685496e8aec65d18be6a181fd3c45190940953e0cf7991f6edf6c330c8557d58c70f2591d1973585f27e59d5186d0fc089ec51b0913fc17c4a1e74c84",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/core/layout/services/layout.module.ts",
+            "methods": [],
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\n\r\n@NgModule({\r\n  imports: [CommonModule],\r\n  exports: []\r\n})\r\nexport class LayoutModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "LayoutRoutingModule",
+            "id": "module-LayoutRoutingModule-cf43eb5732ffec95973dc14ee0cb8aadcd1e09cffa8d54f35ac7d32136d55495d746f6bb7e2be9d41f664a47a15f4e6f53471ec91afa3d63449cdf997be01ce8",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/core/layout/services/layout-routing.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { RouterModule } from \"@angular/router\";\r\nimport { layoutRoutes } from \"./layout.routes\";\r\n\r\n@NgModule({\r\n  imports: [RouterModule.forChild(layoutRoutes)],\r\n  exports: [RouterModule]\r\n})\r\nexport class LayoutRoutingModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "RegionModule",
+            "id": "module-RegionModule-21f2a0b8571b6ad512ad945cc6c479c83bda2056c398fcb7beaef2c0b1e2cbeab2eee8d561e485710ac6e03fa2d10368c83fb5afedb630d45149bd3183c0c673",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/features/region/region.module.ts",
+            "methods": [],
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { RegionFormComponent } from \"./pages/region-form/region-form.component\";\r\nimport { RegionRoutingModule } from './services/region-routing.module';\r\n\r\n@NgModule({\r\n  imports: [CommonModule, RegionFormComponent, RegionRoutingModule],\r\n  exports: [RegionFormComponent]\r\n})\r\n\r\nexport class RegionModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "RegionFormComponent"
+                        },
+                        {
+                            "name": "RegionRoutingModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "RegionFormComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "RegionRoutingModule",
+            "id": "module-RegionRoutingModule-a8232a42db41d8ec4ef5db4bbea1f895647e1ae5f120ee32ae5fe58800eff464b38eeeafe9f0c2605edaada53475e8bd5d00dec835f2e784ffa7ecebe9b5e364",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/features/region/services/region-routing.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { RouterModule } from \"@angular/router\";\r\nimport { regionRoutes } from \"./region.routes\";\r\n\r\n@NgModule({\r\n  imports: [RouterModule.forChild(regionRoutes)],\r\n  exports: [RouterModule]\r\n})\r\nexport class RegionRoutingModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "SharedModule",
+            "id": "module-SharedModule-e6d958e664f18588078bbddc95459e73c4a595c424d222c3089b944d33a584b3879dac2c9b40d22f6a03a891b9e7d8e10221b91ec4307246c1b9e0ee31afb2bf",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/shared/shared.module.ts",
+            "methods": [],
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\n\r\n@NgModule({\r\n  imports: [CommonModule],\r\n  exports: []\r\n})\r\nexport class SharedModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        }
+    ],
     "miscellaneous": {
         "variables": [
             {
@@ -417,7 +2526,37 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "ApplicationConfig",
-                "defaultValue": "{\r\n  providers: [\r\n    provideBrowserGlobalErrorListeners(),\r\n    provideZoneChangeDetection({ eventCoalescing: true }),\r\n    provideRouter(routes),\r\n    providePrimeNG({\r\n      theme: {\r\n        preset: Aura\r\n      }\r\n    })\r\n  ]\r\n}"
+                "defaultValue": "{\r\n  providers: [\r\n    provideBrowserGlobalErrorListeners(),\r\n    provideZoneChangeDetection({ eventCoalescing: true }),\r\n    provideRouter(routes),\r\n    provideAnimations(),\r\n    provideHttpClient(),\r\n    providePrimeNG({\r\n      theme: {\r\n        preset: Aura\r\n      }\r\n    })\r\n  ]\r\n}"
+            },
+            {
+                "name": "departmentRoute",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/department/services/department.routes.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Routes",
+                "defaultValue": "[\r\n  {\r\n    path: \"department/:code\",\r\n    component: DepartmentListComponent,\r\n  }\r\n]"
+            },
+            {
+                "name": "layoutRoutes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/core/layout/services/layout.routes.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Routes",
+                "defaultValue": "[\r\n  {\r\n    path: \"\",\r\n    component: undefined,\r\n  }\r\n]"
+            },
+            {
+                "name": "regionRoutes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/region/services/region.routes.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Routes",
+                "defaultValue": "[\r\n  {\r\n    path: \"\",\r\n    component: RegionFormComponent,\r\n  }\r\n]"
             },
             {
                 "name": "routes",
@@ -427,10 +2566,65 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Routes",
-                "defaultValue": "[]"
+                "defaultValue": "[\r\n  { path: '', loadChildren: () => \"import('./features/features.module').then(m => m.FeaturesModule)\" },\r\n]"
             }
         ],
-        "functions": [],
+        "functions": [
+            {
+                "name": "buildGoogleMapsUrl",
+                "file": "src/app/shared/utils/maps-url.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>Builds a Google Maps search URL for a given commune.\nEncodes the city name and postal codes to ensure a valid URL.</p>\n",
+                "args": [
+                    {
+                        "name": "commune",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "string",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 218,
+                            "end": 225,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "commune"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 212,
+                            "end": 217,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<ul>\n<li>The commune object containing name and postal codes.</li>\n</ul>\n"
+                    },
+                    {
+                        "tagName": {
+                            "pos": 286,
+                            "end": 293,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": "<p>A fully constructed Google Maps search URL, or an empty string if input is invalid.</p>\n"
+                    }
+                ]
+            }
+        ],
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
@@ -443,7 +2637,43 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "ApplicationConfig",
-                    "defaultValue": "{\r\n  providers: [\r\n    provideBrowserGlobalErrorListeners(),\r\n    provideZoneChangeDetection({ eventCoalescing: true }),\r\n    provideRouter(routes),\r\n    providePrimeNG({\r\n      theme: {\r\n        preset: Aura\r\n      }\r\n    })\r\n  ]\r\n}"
+                    "defaultValue": "{\r\n  providers: [\r\n    provideBrowserGlobalErrorListeners(),\r\n    provideZoneChangeDetection({ eventCoalescing: true }),\r\n    provideRouter(routes),\r\n    provideAnimations(),\r\n    provideHttpClient(),\r\n    providePrimeNG({\r\n      theme: {\r\n        preset: Aura\r\n      }\r\n    })\r\n  ]\r\n}"
+                }
+            ],
+            "src/app/features/department/services/department.routes.ts": [
+                {
+                    "name": "departmentRoute",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/department/services/department.routes.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Routes",
+                    "defaultValue": "[\r\n  {\r\n    path: \"department/:code\",\r\n    component: DepartmentListComponent,\r\n  }\r\n]"
+                }
+            ],
+            "src/app/core/layout/services/layout.routes.ts": [
+                {
+                    "name": "layoutRoutes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/layout/services/layout.routes.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Routes",
+                    "defaultValue": "[\r\n  {\r\n    path: \"\",\r\n    component: undefined,\r\n  }\r\n]"
+                }
+            ],
+            "src/app/features/region/services/region.routes.ts": [
+                {
+                    "name": "regionRoutes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/region/services/region.routes.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Routes",
+                    "defaultValue": "[\r\n  {\r\n    path: \"\",\r\n    component: RegionFormComponent,\r\n  }\r\n]"
                 }
             ],
             "src/app/app.routes.ts": [
@@ -455,21 +2685,106 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Routes",
-                    "defaultValue": "[]"
+                    "defaultValue": "[\r\n  { path: '', loadChildren: () => \"import('./features/features.module').then(m => m.FeaturesModule)\" },\r\n]"
                 }
             ]
         },
-        "groupedFunctions": {},
+        "groupedFunctions": {
+            "src/app/shared/utils/maps-url.ts": [
+                {
+                    "name": "buildGoogleMapsUrl",
+                    "file": "src/app/shared/utils/maps-url.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>Builds a Google Maps search URL for a given commune.\nEncodes the city name and postal codes to ensure a valid URL.</p>\n",
+                    "args": [
+                        {
+                            "name": "commune",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "string",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 218,
+                                "end": 225,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "commune"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 212,
+                                "end": 217,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<ul>\n<li>The commune object containing name and postal codes.</li>\n</ul>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 286,
+                                "end": 293,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>A fully constructed Google Maps search URL, or an empty string if input is invalid.</p>\n"
+                        }
+                    ]
+                }
+            ]
+        },
         "groupedEnumerations": {},
         "groupedTypeAliases": {}
     },
     "routes": {
         "name": "<root>",
         "kind": "module",
-        "children": []
+        "children": [
+            {
+                "name": "DepartmentListComponent",
+                "kind": "component",
+                "path": "department/:code",
+                "filename": "src/app/features/department/services/department.routes.ts"
+            },
+            {
+                "name": "RegionFormComponent",
+                "kind": "component",
+                "path": "",
+                "filename": "src/app/features/region/services/region.routes.ts"
+            },
+            {
+                "name": "DepartmentRoutingModule",
+                "kind": "module",
+                "filename": "src/app/features/department/services/department-routing.module.ts"
+            },
+            {
+                "name": "LayoutRoutingModule",
+                "kind": "module",
+                "filename": "src/app/core/layout/services/layout-routing.module.ts"
+            },
+            {
+                "name": "RegionRoutingModule",
+                "kind": "module",
+                "filename": "src/app/features/region/services/region-routing.module.ts"
+            }
+        ]
     },
     "coverage": {
-        "count": 11,
+        "count": 13,
         "status": "low",
         "files": [
             {
@@ -500,6 +2815,163 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/2",
                 "status": "low"
+            },
+            {
+                "filePath": "src/app/core/layout/footer/footer.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FooterComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/layout/menu/menu.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "MenuComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/layout/services/layout.routes.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "layoutRoutes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/department/model/commune.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Commune",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/department/model/department.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Department",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/department/pages/department-list/department-list.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "DepartmentListComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/department/services/department.routes.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "departmentRoute",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/region/model/region.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Region",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/region/pages/region-form/region-form.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "RegionFormComponent",
+                "coveragePercent": 36,
+                "coverageCount": "4/11",
+                "status": "medium"
+            },
+            {
+                "filePath": "src/app/features/region/pages/region-form/region-form.component.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "AutoCompleteCompleteEvent",
+                "coveragePercent": 33,
+                "coverageCount": "1/3",
+                "status": "medium"
+            },
+            {
+                "filePath": "src/app/features/region/services/region.routes.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "regionRoutes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/test-technique-autocomplete/test-technique-autocomplete.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TestTechniqueAutocompleteComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/18",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/test-technique-chips/test-technique-chips.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TestTechniqueChipsComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/test-technique-table/test-technique-table.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TestTechniqueTableComponent",
+                "coveragePercent": 60,
+                "coverageCount": "6/10",
+                "status": "good"
+            },
+            {
+                "filePath": "src/app/shared/model/column.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Column",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/services/api/api.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "ApiService",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/utils/maps-url.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "buildGoogleMapsUrl",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/button.component.ts",

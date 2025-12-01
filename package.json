@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "storybook": "ng run test_technique_front:storybook",
-    "build-storybook": "ng run test_technique_front:build-storybook"
+    "build-storybook": "ng run test_technique_front:build-storybook",
+    "compodoc": "npx compodoc -p tsconfig.doc.json"
   },
   "prettier": {
     "overrides": [

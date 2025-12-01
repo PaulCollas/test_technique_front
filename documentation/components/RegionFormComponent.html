@@ -1,0 +1,1068 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>test-technique-front documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">test-technique-front documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  RegionFormComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/features/region/pages/region-form/region-form.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-region-form</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                                <code><a href="../components/TestTechniqueAutocompleteComponent.html" target="_self" >TestTechniqueAutocompleteComponent</a></code>
+                            <code>FormsModule</code>
+                                <code><a href="../components/TestTechniqueChipsComponent.html" target="_self" >TestTechniqueChipsComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./region-form.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./region-form.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#departments" >departments</a>
+                            </li>
+                            <li>
+                                <a href="#filteredRegions" >filteredRegions</a>
+                            </li>
+                            <li>
+                                <a href="#linkDepartementsBase" >linkDepartementsBase</a>
+                            </li>
+                            <li>
+                                <a href="#regions" >regions</a>
+                            </li>
+                            <li>
+                                <a href="#selectedRegion" >selectedRegion</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filterRegion" >filterRegion</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadRegions" >loadRegions</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onRegionSelected" >onRegionSelected</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(api: <a href="../injectables/ApiService.html" target="_self">ApiService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:36</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>api</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ApiService.html" target="_self" >ApiService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterRegion"></a>
+                    <span class="name">
+                        <span ><b>filterRegion</b></span>
+                        <a href="#filterRegion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filterRegion(event: <a href="../interfaces/AutoCompleteCompleteEvent.html" target="_self">AutoCompleteCompleteEvent</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filters the list of regions based on user query in the autocomplete.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="../interfaces/AutoCompleteCompleteEvent.html" target="_self" >AutoCompleteCompleteEvent</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>AutoComplete event containing the search query.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadRegions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadRegions</b></span>
+                        <a href="#loadRegions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadRegions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook triggered on component initialization.
+Loads region list from the API.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRegionSelected"></a>
+                    <span class="name">
+                        <span ><b>onRegionSelected</b></span>
+                        <a href="#onRegionSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRegionSelected(region?: <a href="../interfaces/Region.html" target="_self">Region | null</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Called when the bound ngModel changes on the autocomplete: select or clear a region.
+If a region is selected we fetch its departments using the ApiService.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>region</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Region.html" target="_self" >Region | null</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="departments"></a>
+                    <span class="name">
+                        <span ><b>departments</b></span>
+                        <a href="#departments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Department.html" target="_self" >Department[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The list of departments returned when a region is selected</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredRegions"></a>
+                    <span class="name">
+                        <span ><b>filteredRegions</b></span>
+                        <a href="#filteredRegions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Region.html" target="_self" >Region[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="linkDepartementsBase"></a>
+                    <span class="name">
+                        <span ><b>linkDepartementsBase</b></span>
+                        <a href="#linkDepartementsBase"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;department/&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="regions"></a>
+                    <span class="name">
+                        <span ><b>regions</b></span>
+                        <a href="#regions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Region.html" target="_self" >Region[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedRegion"></a>
+                    <span class="name">
+                        <span ><b>selectedRegion</b></span>
+                        <a href="#selectedRegion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Region.html" target="_self" >Region | undefined</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/features/region/pages/region-form/region-form.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { TestTechniqueAutocompleteComponent } from &#x27;../../../../shared/components/test-technique-autocomplete/test-technique-autocomplete.component&#x27;;
+import { ApiService } from &#x27;../../../../shared/services/api/api.service&#x27;;
+import type { Region } from &#x27;../../model/region.model&#x27;;
+import { TestTechniqueChipsComponent } from &quot;../../../../shared/components/test-technique-chips/test-technique-chips.component&quot;;
+import { Department } from &#x27;../../../department/model/department.model&#x27;;
+
+
+/**
+ * Event interface used by PrimeNG AutoComplete component.
+ */
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
+
+@Component({
+  selector: &#x27;app-region-form&#x27;,
+  standalone: true,
+  imports: [CommonModule, TestTechniqueAutocompleteComponent, FormsModule, TestTechniqueChipsComponent],
+  templateUrl: &#x27;./region-form.component.html&#x27;,
+  styleUrls: [&#x27;./region-form.component.scss&#x27;]
+})
+
+export class RegionFormComponent implements OnInit {
+
+  regions: Region[] &#x3D; [];
+
+  selectedRegion: Region | undefined;
+
+  filteredRegions: Region[] &#x3D; [];
+  /** The list of departments returned when a region is selected */
+  departments: Department[] &#x3D; [];
+  linkDepartementsBase &#x3D; &#x27;department/&#x27;;
+
+  constructor(private api: ApiService) { }
+
+  /**
+   * Lifecycle hook triggered on component initialization.
+   * Loads region list from the API.
+   */
+  ngOnInit() {
+    this.loadRegions();
+  }
+
+  /**
+   * Called when the bound ngModel changes on the autocomplete: select or clear a region.
+   * If a region is selected we fetch its departments using the ApiService.
+   */
+  onRegionSelected(region?: Region | null): void {
+    this.selectedRegion &#x3D; region ?? undefined;
+
+    // Clear departments if no region is selected
+    if (!region || !region.code) {
+      this.departments &#x3D; [];
+      return;
+    }
+
+    // Fetch departments for the selected region
+    this.api.getDepartmentsByRegionCode(region.code).subscribe({
+      next: (data: unknown) &#x3D;&gt; {
+
+        // Ensure we have an array and map to a simple shape
+        const arr &#x3D; Array.isArray(data) ? data : [];
+        this.departments &#x3D; arr.map((department: Department) &#x3D;&gt; ({ nom: department.nom, code: department.code, codeRegion: department.codeRegion }));
+      },
+      error: (err: unknown) &#x3D;&gt; {
+        console.error(&#x27;Failed to load departments for region&#x27;, region, err);
+        this.departments &#x3D; [];
+      }
+    });
+  }
+
+  private loadRegions(): void {
+    this.api.getRegions().subscribe({
+      next: (data: Region[] | unknown) &#x3D;&gt; {
+        // Ensures valid array format before assignment
+        this.regions &#x3D; Array.isArray(data) ? data : [];
+      },
+      error: (err: unknown) &#x3D;&gt; {
+        console.error(&#x27;Failed to load regions&#x27;, err);
+      }
+    });
+  }
+
+  /**
+   * Filters the list of regions based on user query in the autocomplete.
+   * @param event - AutoComplete event containing the search query.
+  */
+
+  filterRegion(event: AutoCompleteCompleteEvent): void {
+    const query &#x3D; event.query?.trim().toLowerCase() ?? &#x27;&#x27;;
+
+    // Early return improves readability and performance for empty queries
+    if (!query) {
+      this.filteredRegions &#x3D; this.regions;
+      return;
+    }
+
+    // Uses functional methods for clearer logic and immutability
+    this.filteredRegions &#x3D; this.regions.filter(region &#x3D;&gt;
+      region.nom.toLowerCase().startsWith(query)
+    );
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Main page container centered horizontally --&gt;
+&lt;div class&#x3D;&quot;region-page flex justify-center&quot;&gt;
+  &lt;!-- Vertical layout container that centers all elements and keeps consistent width --&gt;
+  &lt;div class&#x3D;&quot;flex flex-col items-center text-center w-full max-w-lg gap-4&quot;&gt;
+    &lt;!-- Page title --&gt;
+    &lt;h1 class&#x3D;&quot;region-title&quot;&gt;Recherche de région&lt;/h1&gt;
+
+    &lt;!-- First description --&gt;
+    &lt;p class&#x3D;&quot;region-desc&quot;&gt;
+      Tapez le nom d&#x27;une région pour sélectionner la région souhaitée.
+    &lt;/p&gt;
+
+    &lt;!-- Autocomplete component (aligned with title thanks to max-w container) --&gt;
+    &lt;app-test-technique-autocomplete
+      class&#x3D;&quot;flex-center&quot;
+      [(ngModel)]&#x3D;&quot;selectedRegion&quot;
+      (ngModelChange)&#x3D;&quot;onRegionSelected($event)&quot;
+      [suggestions]&#x3D;&quot;filteredRegions&quot;
+      (complete)&#x3D;&quot;filterRegion($event)&quot;
+      optionLabel&#x3D;&quot;nom&quot;
+      placeholder&#x3D;&quot;Ex: Normandie&quot;
+      emptyMessage&#x3D;&quot;Aucune région trouvée&quot;
+      [dropdown]&#x3D;&quot;true&quot;
+      inputId&#x3D;&quot;region-autocomplete&quot;
+    &gt;&lt;/app-test-technique-autocomplete&gt;
+
+    &lt;!-- Second description --&gt;
+    @if (selectedRegion?.nom) {
+    &lt;p class&#x3D;&quot;region-desc&quot;&gt;
+      Veuillez sélectionner un département associé à cette région :
+    &lt;/p&gt;
+    }
+
+    &lt;div class&#x3D;&quot;flex-center card flex items-center gap-2 flex-wrap&quot;&gt;
+      @if (selectedRegion) { @for (dept of departments; track $index) {
+      &lt;app-test-technique-chips
+        [href]&#x3D;&quot;linkDepartementsBase + dept.code&quot;
+        [label]&#x3D;&quot;dept.nom&quot;
+      &gt;&lt;/app-test-technique-chips&gt;
+      }
+
+      &lt;!-- If there are no departments returned, show a message --&gt;
+      @if (departments.length &#x3D;&#x3D;&#x3D; 0) {
+      &lt;div class&#x3D;&quot;no-departments&quot;&gt;
+        Aucun département trouvé pour cette région
+      &lt;/div&gt;
+      } } @else {
+      &lt;i class&#x3D;&quot;no-region-txt&quot;&gt;Aucune région sélectionnée&lt;/i&gt;
+      }
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./region-form.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.region-page {
+	max-width: 900px;
+	margin: 1.5rem auto;
+	padding: 0 1rem;
+}
+
+.region-title {
+	font-size: 3rem;
+	margin-bottom: 0.5rem;
+	text-align: center;
+	font-family: var(--ff-unbounded, &#x27;Unbounded&#x27;, sans-serif);
+	color: #ffffff;
+}
+
+.region-desc {
+	text-align: center;
+	color: #ffffff;
+	margin-bottom: 1rem;
+}
+
+.no-region-txt {
+  font-family: var(--ff-poppins);
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.card {
+	padding: 0.75rem;
+	border-radius: 8px;
+	background-color: rgba(255,255,255,0.02);
+	min-height: 48px;
+}
+
+.no-departments {
+	color: rgba(0,0,0,0.6);
+	font-style: italic;
+	width: 100%;
+	text-align: center;
+}
+
+app-test-technique-chips {
+	margin: 0.25rem;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Main page container centered horizontally --><div class="region-page flex justify-center">  <!-- Vertical layout container that centers all elements and keeps consistent width -->  <div class="flex flex-col items-center text-center w-full max-w-lg gap-4">    <!-- Page title -->    <h1 class="region-title">Recherche de région</h1>    <!-- First description -->    <p class="region-desc">      Tapez le nom d\'une région pour sélectionner la région souhaitée.    </p>    <!-- Autocomplete component (aligned with title thanks to max-w container) -->    <app-test-technique-autocomplete      class="flex-center"      [(ngModel)]="selectedRegion"      (ngModelChange)="onRegionSelected($event)"      [suggestions]="filteredRegions"      (complete)="filterRegion($event)"      optionLabel="nom"      placeholder="Ex: Normandie"      emptyMessage="Aucune région trouvée"      [dropdown]="true"      inputId="region-autocomplete"    ></app-test-technique-autocomplete>    <!-- Second description -->    @if (selectedRegion?.nom) {    <p class="region-desc">      Veuillez sélectionner un département associé à cette région :    </p>    }    <div class="flex-center card flex items-center gap-2 flex-wrap">      @if (selectedRegion) { @for (dept of departments; track $index) {      <app-test-technique-chips        [href]="linkDepartementsBase + dept.code"        [label]="dept.nom"      ></app-test-technique-chips>      }      <!-- If there are no departments returned, show a message -->      @if (departments.length === 0) {      <div class="no-departments">        Aucun département trouvé pour cette région      </div>      } } @else {      <i class="no-region-txt">Aucune région sélectionnée</i>      }    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'ButtonComponent', 'selector': 'storybook-button'},{'name': 'DepartmentListComponent', 'selector': 'app-department-list'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HeaderComponent', 'selector': 'storybook-header'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'PageComponent', 'selector': 'storybook-page'},{'name': 'RegionFormComponent', 'selector': 'app-region-form'},{'name': 'TestTechniqueAutocompleteComponent', 'selector': 'app-test-technique-autocomplete'},{'name': 'TestTechniqueChipsComponent', 'selector': 'app-test-technique-chips'},{'name': 'TestTechniqueTableComponent', 'selector': 'app-test-technique-table'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RegionFormComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RegionFormComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
