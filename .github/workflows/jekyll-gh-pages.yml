@@ -1,22 +1,16 @@
-  - name: Deploy Test Technique Front
-  # You may pin to the exact commit or the version.
-  # uses: bitovi/github-actions-angular-to-github-pages@a75a3bc81b046cf8af9515e46911c648bbfc6c67
-  uses: bitovi/github-actions-angular-to-github-pages@v1.0.0
+- name: Deploy Test Technique Front
+  uses: PaulCollas/test_technique_front@v1.0.0
   with:
-    # Specifies if this action should checkout the code
-    checkout: # optional, default is true
-    # Partially clone against a given filter. Overrides checkout-sparse-checkout if set. maps to actions/checkout inputs.checkout-filter
-    checkout-filter: # optional
-    # Do a sparse checkout on given patterns. Each pattern should be separated with new lines. maps to actions/checkout inputs.sparse-checkout
-    checkout-sparse-checkout: # optional
-    # Specifies whether to use cone-mode when doing a sparse checkout. maps to actions/checkout inputs.sparse-checkout-cone-mode
-    checkout-sparse-checkout-cone-mode: # optional, default is true
-    # Specifies the path of the static assets after building
-    path: # optional, default is dist/${{ github.event.repository.name }}/browser
-    # Specifies the command to run the installation.
-    install_command: # optional, default is npm ci
-    # Specifies the command to run after the install command for the build
-    build_command: # optional, default is npm run build -- --base-href=/${{ github.event.repository.name }}/
-    # Specifies if the action should cache npm dependencies.
-    caching: # optional
-          
+    checkout: true
+
+    # dossier généré par Angular 20
+    path: dist/test-technique-front/browser
+
+    # installation des deps
+    install_command: npm ci
+
+    # build Angular 20 + base-href pour GitHub Pages
+    build_command: npm run build -- --base-href=/test-technique-front/
+
+    # cache npm
+    caching: true
