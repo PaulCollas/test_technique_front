@@ -9,9 +9,9 @@
     Projet technique sur Angular
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">Voir le prototype FIGMA</a>
+    <a href="https://www.figma.com/proto/6BJfLEXFWWNtcXFXLR78io/Test-Technique-Front--PrimeNG-?node-id=2679-12245&t=FdNonksW8DeH1mJi-1">Voir le prototype FIGMA</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template">Voir la démo</a>
+    <a href="https://test-technique-front-hg84ldjak-paulcollas-projects.vercel.app/">Voir la démo</a>
   </p>
 </div>
 
@@ -234,3 +234,4 @@ Quelques ressources utiles :
 * https://shields.io
 
 <p align="right">(<a href="#readme-top">Retour</a>)</p>
+
