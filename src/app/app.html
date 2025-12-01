@@ -1,9 +1,12 @@
+<!-- Main navigation menu component -->
 <app-menu></app-menu>
 
+<!-- Main content area where routed components will be displayed -->
 <main class="app-content">
-  <router-outlet></router-outlet>
+  <router-outlet></router-outlet> <!-- Angular router outlet for dynamic content -->
 </main>
 
+<!-- Background video wrapper -->
 <div class="video-wrap">
   <video
     src="https://www.tooplate.com/templates/2136_kool_form_pack/videos/video.mp4"
@@ -13,8 +16,10 @@
     class="custom-video"
     poster=""
   >
+    <!-- Fallback text if the browser does not support the video tag -->
     Your browser does not support the video tag.
   </video>
 </div>
 
+<!-- Footer component displayed at the bottom of the page -->
 <app-footer></app-footer>

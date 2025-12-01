@@ -28,10 +28,10 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#getting-started">Démarrer le projet</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#prerequisites">Installation</a></li>
+        <li><a href="#installation">Lancer l'application</a></li>
       </ul>
     </li>
     <li><a href="#usage">Documentation</a></li>
@@ -129,6 +129,29 @@ Pour lancer le projet :
 2. Lancer la documentation : 
    ```sh
    ng serve
+   ```
+
+### Lancer les tests
+
+1. Lancer StoryBook :
+   ```sh
+   npm run storybook
+   ```
+
+2. Ouvrir dans le navigateur : 
+   ```sh
+   http://localhost:6006/
+   ```
+
+
+3. Lancer Jasmine :
+   ```sh
+   npm run test
+   ```
+
+4. Ouvrir dans le navigateur : 
+   ```sh
+   http://localhost:9876/?id=2369937
    ```
 
 

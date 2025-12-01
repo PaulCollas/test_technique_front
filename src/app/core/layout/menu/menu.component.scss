@@ -1,15 +1,17 @@
+/* Menubar root container */
 .p-menubar {
   position: relative;
   border: none;
   background: none;
 }
 
+/* Menubar title styling */
 .menubar-title {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  transform: translate(-50%, -50%); /* Center title */
+  pointer-events: none; /* Ignore pointer events */
   z-index: 10;
   font-family: var(--ff-unbounded, 'Unbounded', sans-serif);
   letter-spacing: 0.5px;
@@ -17,6 +19,9 @@
   font-size: 1.25rem;
 }
 
+/* Hide title on small screens */
 @media (max-width: 640px) {
-  .menubar-title { display:none; }
+  .menubar-title {
+    display: none;
+  }
 }

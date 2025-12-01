@@ -1,21 +1,28 @@
+<!-- Toast container for showing global messages and notifications -->
 <p-toast></p-toast>
 
+<!-- PrimeNG Table component -->
 <p-table
   [value]="value"
   [paginator]="paginator"
   [rows]="rows"
   [tableStyle]="{ 'min-width': '50rem' }"
 >
+  <!-- Table header template -->
   <ng-template pTemplate="header">
+    <!-- Loop through each column to render the header cells -->
     @for (col of columns; track $index) {
     <th>{{ col.header }}</th>
     }
   </ng-template>
 
+  <!-- Table body template -->
   <ng-template pTemplate="body" let-row>
     <tr>
+      <!-- Loop through each column to render the data cells -->
       @for (col of columns; track $index) {
       <td>
+        <!-- If the column action is 'maps', render a clickable map icon -->
         @if (col.action === 'maps') {
         <ng-container>
           <a
@@ -24,10 +31,12 @@
             aria-label="Ouvrir {{ getValue(row, 'nom') }} dans Google Maps"
           >
             <i class="pi pi-external-link map-icon" aria-hidden="true"></i>
+            <!-- Map icon -->
           </a>
         </ng-container>
         } @else {
-          {{ getValue(row, col.field) }}
+        <!-- Otherwise, render the cell value dynamically -->
+        {{ getValue(row, col.field) }}
         }
       </td>
       }

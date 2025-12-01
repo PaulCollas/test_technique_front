@@ -1,5 +1,8 @@
+<!-- Menubar component -->
 <p-menubar>
+  <!-- Start slot: logo and title -->
   <ng-template #start>
+    <!-- Logo link -->
     <a href="/">
       <img
         src="https://www.keyconsulting.fr/images/logo.svg"
@@ -7,12 +10,17 @@
         class="mr-2"
       />
     </a>
+
+    <!-- Menubar title -->
     <div class="menubar-title">
       <span class="text-lg font-bold">Test technique frontend</span>
     </div>
   </ng-template>
+
+  <!-- End slot: user avatar -->
   <ng-template #end>
     <div class="flex items-center gap-2">
+      <!-- Avatar image -->
       <p-avatar
         image="https://avatars.githubusercontent.com/u/63116096?v=4"
         shape="circle"
