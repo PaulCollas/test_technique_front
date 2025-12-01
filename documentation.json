@@ -297,7 +297,7 @@
     "injectables": [
         {
             "name": "ApiService",
-            "id": "injectable-ApiService-1f0074f80f3c9795b61dff828431fd113c47767c3c8c9f30a220f8d65c21fe93de943308e3c4a06704de2dee335b4c31075966b31400aec3a72503994ce4811b",
+            "id": "injectable-ApiService-b17647838a89b0a036b19a78d58852122f6c4815ab7d63fa296c7d5621fc3eb5e515be124559473765f7c493ea60d1ffcaf9dbc0e029fcb44d48d4550a31f324",
             "file": "src/app/shared/services/api/api.service.ts",
             "properties": [
                 {
@@ -322,7 +322,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 18,
+                    "line": 20,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -342,7 +342,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 45,
+                    "line": 48,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -370,7 +370,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 38,
+                    "line": 41,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -391,7 +391,7 @@
                     "optional": false,
                     "returnType": "{ 'Content-Type': string; }",
                     "typeParameters": [],
-                    "line": 12,
+                    "line": 13,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -404,7 +404,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 24,
+                    "line": 27,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -421,7 +421,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 31,
+                    "line": 34,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -441,7 +441,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { HttpClient } from \"@angular/common/http\";\r\nimport { Injectable } from '@angular/core';\r\n\r\n@Injectable({ providedIn: 'root' })\r\n\r\nexport class ApiService {\r\n\r\n  readonly BASE_GEO_API_URL = 'https://geo.api.gouv.fr';\r\n\r\n  constructor(readonly http: HttpClient) { }\r\n\r\n  private getHeaders() {\r\n    return {\r\n      'Content-Type': 'application/json'\r\n    };\r\n  }\r\n\r\n  private checkBaseUrl() {\r\n    if (!this.BASE_GEO_API_URL) {\r\n      throw new Error('BASE_GEO_API_URL is not defined');\r\n    }\r\n  }\r\n\r\n  getRegions() {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/regions`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  getRegionsByName(regionName: string) {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/regions?nom=${regionName}`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  getDepartmentsByRegionCode(regionCode: string) {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/regions/${regionCode}/departements`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  getCommunesByDepartmentCode(departmentCode: string) {\r\n    this.checkBaseUrl();\r\n\r\n    const url = `${this.BASE_GEO_API_URL}/departements/${departmentCode}/communes`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n}\r\n",
+            "sourceCode": "import { HttpClient } from \"@angular/common/http\";\r\nimport { Injectable } from '@angular/core';\r\n\r\n@Injectable({ providedIn: 'root' })\r\nexport class ApiService {\r\n\r\n  // Base URL for the French government Geo API\r\n  readonly BASE_GEO_API_URL = 'https://geo.api.gouv.fr';\r\n\r\n  constructor(readonly http: HttpClient) { }\r\n\r\n  // Private method to get default HTTP headers\r\n  private getHeaders() {\r\n    return {\r\n      'Content-Type': 'application/json'\r\n    };\r\n  }\r\n\r\n  // Private method to check if the base URL is defined\r\n  private checkBaseUrl() {\r\n    if (!this.BASE_GEO_API_URL) {\r\n      throw new Error('BASE_GEO_API_URL is not defined');\r\n    }\r\n  }\r\n\r\n  // Get all regions from the API\r\n  getRegions() {\r\n    this.checkBaseUrl();\r\n    const url = `${this.BASE_GEO_API_URL}/regions`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  // Get regions filtered by name\r\n  getRegionsByName(regionName: string) {\r\n    this.checkBaseUrl();\r\n    const url = `${this.BASE_GEO_API_URL}/regions?nom=${regionName}`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  // Get all departments for a specific region code\r\n  getDepartmentsByRegionCode(regionCode: string) {\r\n    this.checkBaseUrl();\r\n    const url = `${this.BASE_GEO_API_URL}/regions/${regionCode}/departements`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n  // Get all communes for a specific department code\r\n  getCommunesByDepartmentCode(departmentCode: string) {\r\n    this.checkBaseUrl();\r\n    const url = `${this.BASE_GEO_API_URL}/departements/${departmentCode}/communes`;\r\n    return this.http.get(url, { headers: this.getHeaders() });\r\n  }\r\n\r\n}\r\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -545,13 +545,13 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"primeicons/primeicons.css\";\r\n\r\n:host {\r\n  display: flex;\r\n  flex-direction: column;\r\n  height: 100%;\r\n}\r\n\r\n.app-content {\r\n\tflex: 1 1 auto;\r\n\tdisplay: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n\toverflow-y: auto;\r\n\t-webkit-overflow-scrolling: touch;\r\n}\r\n\r\napp-footer {\r\n  width: 100%;\r\n}\r\n\r\n.video-wrap {\r\n  z-index: -100;\r\n}\r\n\r\n.custom-video {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  object-fit: cover;\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n",
+                    "data": "/* Import PrimeIcons for icons used in the app */\r\n@import \"primeicons/primeicons.css\";\r\n\r\n/* Host component: make the component a full-height flex container */\r\n:host {\r\n  display: flex;\r\n  flex-direction: column; /* Arrange children vertically */\r\n  height: 100%;           /* Full height of the parent/container */\r\n}\r\n\r\n/* Main content area styling */\r\n.app-content {\r\n  flex: 1 1 auto;               /* Grow and shrink as needed */\r\n  display: flex;                 /* Use flexbox for inner alignment */\r\n  justify-content: center;       /* Center horizontally */\r\n  align-items: center;           /* Center vertically */\r\n  overflow-y: auto;              /* Enable vertical scrolling if content overflows */\r\n  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */\r\n}\r\n\r\n/* Footer styling: always full width */\r\napp-footer {\r\n  width: 100%;\r\n}\r\n\r\n/* Video wrapper z-index to push video behind other content */\r\n.video-wrap {\r\n  z-index: -100;\r\n}\r\n\r\n/* Video styling for full background coverage */\r\n.custom-video {\r\n  position: absolute; /* Position relative to the parent */\r\n  top: 0;\r\n  left: 0;\r\n  object-fit: cover;  /* Cover the container while maintaining aspect ratio */\r\n  width: 100%;        /* Full width */\r\n  height: 100%;       /* Full height */\r\n}\r\n",
                     "styleUrl": "./app.scss"
                 }
             ],
             "stylesData": "",
             "extends": [],
-            "templateData": "<app-menu></app-menu>\r\n\r\n<main class=\"app-content\">\r\n  <router-outlet></router-outlet>\r\n</main>\r\n\r\n<div class=\"video-wrap\">\r\n  <video\r\n    src=\"https://www.tooplate.com/templates/2136_kool_form_pack/videos/video.mp4\"\r\n    autoplay=\"\"\r\n    loop=\"\"\r\n    muted=\"\"\r\n    class=\"custom-video\"\r\n    poster=\"\"\r\n  >\r\n    Your browser does not support the video tag.\r\n  </video>\r\n</div>\r\n\r\n<app-footer></app-footer>\r\n"
+            "templateData": "<!-- Main navigation menu component -->\r\n<app-menu></app-menu>\r\n\r\n<!-- Main content area where routed components will be displayed -->\r\n<main class=\"app-content\">\r\n  <router-outlet></router-outlet> <!-- Angular router outlet for dynamic content -->\r\n</main>\r\n\r\n<!-- Background video wrapper -->\r\n<div class=\"video-wrap\">\r\n  <video\r\n    src=\"https://www.tooplate.com/templates/2136_kool_form_pack/videos/video.mp4\"\r\n    autoplay=\"\"\r\n    loop=\"\"\r\n    muted=\"\"\r\n    class=\"custom-video\"\r\n    poster=\"\"\r\n  >\r\n    <!-- Fallback text if the browser does not support the video tag -->\r\n    Your browser does not support the video tag.\r\n  </video>\r\n</div>\r\n\r\n<!-- Footer component displayed at the bottom of the page -->\r\n<app-footer></app-footer>\r\n"
         },
         {
             "name": "ButtonComponent",
@@ -891,7 +891,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "\r\n\r\n.footer-root {\r\n\tbackground: transparent;\r\n\tcolor: inherit;\r\n\tpadding: 1rem 1rem;\r\n}\r\n\r\n.footer-inner {\r\n\tmax-width: 1100px;\r\n\tmargin: 0 auto;\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\talign-items: center;\r\n\tgap: 0.75rem;\r\n\ttext-align: center;\r\n}\r\n\r\n.footer-title {\r\n\tmargin: 0;\r\n\tfont-weight: 700;\r\n\tfont-size: 1.25rem;\r\n\tfont-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n\tletter-spacing: 0.5px;\r\n\tcolor: #ffffff;\r\n}\r\n\r\n.footer-description {\r\n\tmargin: 0;\r\n\topacity: 0.85;\r\n\tmax-width: 780px;\r\n  color: #ffffff;\r\n}\r\n\r\n.footer-socials {\r\n\tdisplay: flex;\r\n\tgap: 1rem;\r\n\tmargin-top: 0.5rem;\r\n}\r\n\r\n.social-link {\r\n\tdisplay: inline-flex;\r\n\talign-items: center;\r\n\tjustify-content: center;\r\n\twidth: 36px;\r\n\theight: 36px;\r\n\tborder-radius: 9999px;\r\n\tcolor: inherit;\r\n\ttext-decoration: none;\r\n\tborder: 1px solid #f4f4f4;;\r\n\ttransition: transform 120ms ease, background 120ms ease;\r\n}\r\n\r\n.social-link:hover {\r\n\ttransform: translateY(-2px);\r\n\tbackground: rgba(255,255,255,0.12);\r\n}\r\n\r\n.sr-only {\r\n\tposition: absolute !important;\r\n\twidth: 1px;\r\n\theight: 1px;\r\n\tpadding: 0;\r\n\tmargin: -1px;\r\n\toverflow: hidden;\r\n\tclip: rect(0, 0, 0, 0);\r\n\twhite-space: nowrap;\r\n\tborder: 0;\r\n}\r\n\r\n",
+                    "data": "/* Root footer container */\r\n.footer-root {\r\n  background: transparent;\r\n  color: inherit;\r\n  padding: 1rem 1rem;\r\n}\r\n\r\n/* Inner container for footer content */\r\n.footer-inner {\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 0.75rem;\r\n  text-align: center;\r\n}\r\n\r\n/* Footer title */\r\n.footer-title {\r\n  margin: 0;\r\n  font-weight: 700;\r\n  font-size: 1.25rem;\r\n  font-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n  letter-spacing: 0.5px;\r\n  color: #ffffff;\r\n}\r\n\r\n/* Footer description text */\r\n.footer-description {\r\n  margin: 0;\r\n  opacity: 0.85;\r\n  max-width: 780px;\r\n  color: #ffffff;\r\n}\r\n\r\n/* Container for social links */\r\n.footer-socials {\r\n  display: flex;\r\n  gap: 1rem;\r\n  margin-top: 0.5rem;\r\n}\r\n\r\n/* Individual social link styling */\r\n.social-link {\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  width: 36px;\r\n  height: 36px;\r\n  border-radius: 9999px; /* Fully rounded */\r\n  color: inherit;\r\n  text-decoration: none;\r\n  border: 1px solid #f4f4f4;\r\n  transition: transform 120ms ease, background 120ms ease;\r\n}\r\n\r\n/* Hover effect for social links */\r\n.social-link:hover {\r\n  transform: translateY(-2px);\r\n  background: rgba(255, 255, 255, 0.12);\r\n}\r\n\r\n/* Screen-reader only text */\r\n.sr-only {\r\n  position: absolute !important;\r\n  width: 1px;\r\n  height: 1px;\r\n  padding: 0;\r\n  margin: -1px;\r\n  overflow: hidden;\r\n  clip: rect(0, 0, 0, 0);\r\n  white-space: nowrap;\r\n  border: 0;\r\n}\r\n",
                     "styleUrl": "./footer.component.scss"
                 }
             ],
@@ -908,7 +908,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<footer class=\"footer-root p-component\">\n  <div class=\"footer-inner\">\n    <h3 class=\"footer-title\">Paul Collas</h3>\n    <p class=\"footer-description\">L'application pour la réalisation du test technique frontend</p>\n\n    <div class=\"footer-socials\" role=\"navigation\" aria-label=\"Réseaux sociaux\">\n      <a class=\"social-link\" href=\"https://studio210.fr/\" target=\"_self\" rel=\"noopener noreferrer\" aria-label=\"Mon site\">\n        <i class=\"pi pi-globe\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">Site</span>\n      </a>\n\n      <a class=\"social-link\" href=\"https://www.linkedin.com/in/paul-collas-5631ab174/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"LinkedIn\">\n        <i class=\"pi pi-linkedin\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">LinkedIn</span>\n      </a>\n\n      <a class=\"social-link\" href=\"https://github.com/PaulCollas\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"GitHub\">\n        <i class=\"pi pi-github\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">GitHub</span>\n      </a>\n    </div>\n  </div>\n</footer>\n"
+            "templateData": "<!-- Footer component -->\n<footer class=\"footer-root p-component\">\n  <!-- Inner container for footer content -->\n  <div class=\"footer-inner\">\n    <!-- Footer title -->\n    <h3 class=\"footer-title\">Paul Collas</h3>\n\n    <!-- Footer description -->\n    <p class=\"footer-description\">L'application pour la réalisation du test technique frontend</p>\n\n    <!-- Social links navigation -->\n    <div class=\"footer-socials\" role=\"navigation\" aria-label=\"Réseaux sociaux\">\n      <!-- Personal website link -->\n      <a class=\"social-link\" href=\"https://studio210.fr/\" target=\"_self\" rel=\"noopener noreferrer\" aria-label=\"Mon site\">\n        <i class=\"pi pi-globe\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">Site</span>\n      </a>\n\n      <!-- LinkedIn profile link -->\n      <a class=\"social-link\" href=\"https://www.linkedin.com/in/paul-collas-5631ab174/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"LinkedIn\">\n        <i class=\"pi pi-linkedin\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">LinkedIn</span>\n      </a>\n\n      <!-- GitHub profile link -->\n      <a class=\"social-link\" href=\"https://github.com/PaulCollas\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"GitHub\">\n        <i class=\"pi pi-github\" aria-hidden=\"true\"></i>\n        <span class=\"sr-only\">GitHub</span>\n      </a>\n    </div>\n  </div>\n</footer>\n"
         },
         {
             "name": "HeaderComponent",
@@ -1063,7 +1063,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".p-menubar {\r\n  position: relative;\r\n  border: none;\r\n  background: none;\r\n}\r\n\r\n.menubar-title {\r\n  position: absolute;\r\n  left: 50%;\r\n  top: 50%;\r\n  transform: translate(-50%, -50%);\r\n  pointer-events: none;\r\n  z-index: 10;\r\n  font-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n  letter-spacing: 0.5px;\r\n  color: #ffffff;\r\n  font-size: 1.25rem;\r\n}\r\n\r\n@media (max-width: 640px) {\r\n  .menubar-title { display:none; }\r\n}\r\n",
+                    "data": "/* Menubar root container */\r\n.p-menubar {\r\n  position: relative;\r\n  border: none;\r\n  background: none;\r\n}\r\n\r\n/* Menubar title styling */\r\n.menubar-title {\r\n  position: absolute;\r\n  left: 50%;\r\n  top: 50%;\r\n  transform: translate(-50%, -50%); /* Center title */\r\n  pointer-events: none; /* Ignore pointer events */\r\n  z-index: 10;\r\n  font-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n  letter-spacing: 0.5px;\r\n  color: #ffffff;\r\n  font-size: 1.25rem;\r\n}\r\n\r\n/* Hide title on small screens */\r\n@media (max-width: 640px) {\r\n  .menubar-title {\r\n    display: none;\r\n  }\r\n}\r\n",
                     "styleUrl": "./menu.component.scss"
                 }
             ],
@@ -1080,7 +1080,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<p-menubar>\n  <ng-template #start>\n    <a href=\"/\">\n      <img\n        src=\"https://www.keyconsulting.fr/images/logo.svg\"\n        alt=\"Logo Key Consulting\"\n        class=\"mr-2\"\n      />\n    </a>\n    <div class=\"menubar-title\">\n      <span class=\"text-lg font-bold\">Test technique frontend</span>\n    </div>\n  </ng-template>\n  <ng-template #end>\n    <div class=\"flex items-center gap-2\">\n      <p-avatar\n        image=\"https://avatars.githubusercontent.com/u/63116096?v=4\"\n        shape=\"circle\"\n      />\n    </div>\n  </ng-template>\n</p-menubar>\n"
+            "templateData": "<!-- Menubar component -->\n<p-menubar>\n  <!-- Start slot: logo and title -->\n  <ng-template #start>\n    <!-- Logo link -->\n    <a href=\"/\">\n      <img\n        src=\"https://www.keyconsulting.fr/images/logo.svg\"\n        alt=\"Logo Key Consulting\"\n        class=\"mr-2\"\n      />\n    </a>\n\n    <!-- Menubar title -->\n    <div class=\"menubar-title\">\n      <span class=\"text-lg font-bold\">Test technique frontend</span>\n    </div>\n  </ng-template>\n\n  <!-- End slot: user avatar -->\n  <ng-template #end>\n    <div class=\"flex items-center gap-2\">\n      <!-- Avatar image -->\n      <p-avatar\n        image=\"https://avatars.githubusercontent.com/u/63116096?v=4\"\n        shape=\"circle\"\n      />\n    </div>\n  </ng-template>\n</p-menubar>\n"
         },
         {
             "name": "PageComponent",
@@ -1388,7 +1388,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".region-page {\r\n\tmax-width: 900px;\r\n\tmargin: 1.5rem auto;\r\n\tpadding: 0 1rem;\r\n}\r\n\r\n.region-title {\r\n\tfont-size: 3rem;\r\n\tmargin-bottom: 0.5rem;\r\n\ttext-align: center;\r\n\tfont-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n\tcolor: #ffffff;\r\n}\r\n\r\n.region-desc {\r\n\ttext-align: center;\r\n\tcolor: #ffffff;\r\n\tmargin-bottom: 1rem;\r\n}\r\n\r\n.no-region-txt {\r\n  font-family: var(--ff-poppins);\r\n}\r\n\r\n.flex-center {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-content: center;\r\n}\r\n\r\n.card {\r\n\tpadding: 0.75rem;\r\n\tborder-radius: 8px;\r\n\tbackground-color: rgba(255,255,255,0.02);\r\n\tmin-height: 48px;\r\n}\r\n\r\n.no-departments {\r\n\tcolor: rgba(0,0,0,0.6);\r\n\tfont-style: italic;\r\n\twidth: 100%;\r\n\ttext-align: center;\r\n}\r\n\r\napp-test-technique-chips {\r\n\tmargin: 0.25rem;\r\n}\r\n",
+                    "data": "/* Main container for the region page */\r\n.region-page {\r\n  max-width: 900px;\r\n  margin: 1.5rem auto;\r\n  padding: 0 1rem;\r\n}\r\n\r\n/* Region title styling */\r\n.region-title {\r\n  font-size: 3rem;\r\n  margin-bottom: 0.5rem;\r\n  text-align: center;\r\n  font-family: var(--ff-unbounded, 'Unbounded', sans-serif);\r\n  color: #ffffff;\r\n}\r\n\r\n/* Region description styling */\r\n.region-desc {\r\n  text-align: center;\r\n  color: #ffffff;\r\n  margin-bottom: 1rem;\r\n}\r\n\r\n/* Text styling when no region is available */\r\n.no-region-txt {\r\n  font-family: var(--ff-poppins);\r\n}\r\n\r\n/* Flex utility to center content */\r\n.flex-center {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-content: center;\r\n}\r\n\r\n/* Card component styling */\r\n.card {\r\n  padding: 0.75rem;\r\n  border-radius: 8px;\r\n  background-color: rgba(255, 255, 255, 0.02);\r\n  min-height: 48px;\r\n}\r\n\r\n/* Text shown when no departments are available */\r\n.no-departments {\r\n  color: rgba(0, 0, 0, 0.6);\r\n  font-style: italic;\r\n  width: 100%;\r\n  text-align: center;\r\n}\r\n\r\n/* Margin for the chips component */\r\napp-test-technique-chips {\r\n  margin: 0.25rem;\r\n}\r\n",
                     "styleUrl": "./region-form.component.scss"
                 }
             ],
@@ -1427,7 +1427,7 @@
         },
         {
             "name": "TestTechniqueAutocompleteComponent",
-            "id": "component-TestTechniqueAutocompleteComponent-658a9db3c45a041670dcb8f8116918dd2afacac33b15d326ffded1ff79f0aba621801e61b854d267d825cb4bd26ebd4a3a8afe19bfb13295680ae007f2ba7a5f",
+            "id": "component-TestTechniqueAutocompleteComponent-183017b62cf10f7e03176d3b3adc47f9a141e85653f00b61f0c37460694aefa403dab778dd1302ea28829adccb2e550e271d80500f1f9d8fc6e0914916b551b3",
             "file": "src/app/shared/components/test-technique-autocomplete/test-technique-autocomplete.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1454,7 +1454,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 36,
+                    "line": 46,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -1463,7 +1463,7 @@
                     "defaultValue": "'Aucun résultat trouvé'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 35,
+                    "line": 43,
                     "type": "string",
                     "decorators": []
                 },
@@ -1472,7 +1472,7 @@
                     "defaultValue": "`autocomplete-${Math.random().toString(36).substring(2)}`",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 37,
+                    "line": 49,
                     "type": "string",
                     "decorators": []
                 },
@@ -1481,7 +1481,7 @@
                     "defaultValue": "'label'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 33,
+                    "line": 37,
                     "type": "string",
                     "decorators": []
                 },
@@ -1490,7 +1490,7 @@
                     "defaultValue": "''",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 34,
+                    "line": 40,
                     "type": "string",
                     "decorators": []
                 },
@@ -1499,7 +1499,7 @@
                     "defaultValue": "[]",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 32,
+                    "line": 34,
                     "type": "any[]",
                     "decorators": []
                 }
@@ -1510,7 +1510,7 @@
                     "defaultValue": "new EventEmitter<any>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 39,
+                    "line": 52,
                     "type": "EventEmitter"
                 }
             ],
@@ -1524,7 +1524,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 42
+                    "line": 58
                 },
                 {
                     "name": "onChange",
@@ -1535,7 +1535,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 44,
+                    "line": 61,
                     "modifierKind": [
                         123
                     ]
@@ -1549,7 +1549,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 45,
+                    "line": 62,
                     "modifierKind": [
                         123
                     ]
@@ -1563,7 +1563,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 41
+                    "line": 55
                 }
             ],
             "methodsClass": [
@@ -1580,9 +1580,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 69,
+                    "line": 109,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\nCalled when the autocomplete's completeMethod fires.\nEmits the event upward so the parent component can fetch suggestions.\n",
+                    "description": "<p>Called when the autocomplete&#39;s completeMethod fires.\nEmits the event upward so the parent component can fetch suggestions.</p>\n",
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -1608,9 +1610,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 63,
+                    "line": 99,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\nTriggered when the ngModel value changes (user input).\nNotifies Angular forms via onChange + onTouched.\n",
+                    "description": "<p>Triggered when the ngModel value changes (user input).\nNotifies Angular forms via onChange + onTouched.</p>\n",
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -1636,9 +1640,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 51,
+                    "line": 76,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\nRegisters a callback function that Angular will call\nwhen the component's value changes.\n",
+                    "description": "<p>Registers a callback function that Angular will call\nwhen the component&#39;s value changes.</p>\n",
                     "jsdoctags": [
                         {
                             "name": "fn",
@@ -1664,9 +1670,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 84,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\nRegisters a callback function that Angular will call\nwhen the input is marked as \"touched\".\n",
+                    "description": "<p>Registers a callback function that Angular will call\nwhen the input is marked as &quot;touched&quot;.</p>\n",
                     "jsdoctags": [
                         {
                             "name": "fn",
@@ -1692,9 +1700,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 91,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\nAllows Angular to enable or disable the input programmatically.\n",
+                    "description": "<p>Allows Angular to enable or disable the input programmatically.</p>\n",
                     "jsdoctags": [
                         {
                             "name": "disabled",
@@ -1720,9 +1730,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 47,
+                    "line": 68,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\nCalled by Angular when the form sets a new value.\nUpdates the component's internal value.\n",
+                    "description": "<p>Called by Angular when the form sets a new value.\nUpdates the component&#39;s internal value.</p>\n",
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -1757,7 +1769,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  Component,\n  forwardRef,\n  Input,\n  Output,\n  EventEmitter\n} from '@angular/core';\nimport {\n  NG_VALUE_ACCESSOR,\n  ControlValueAccessor\n} from '@angular/forms';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { AutoComplete } from 'primeng/autocomplete';\n\n@Component({\n  selector: 'app-test-technique-autocomplete',\n  standalone: true,\n  imports: [CommonModule, FormsModule, AutoComplete],\n  templateUrl: './test-technique-autocomplete.component.html',\n  styleUrls: ['./test-technique-autocomplete.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => TestTechniqueAutocompleteComponent),\n      multi: true\n    }\n  ]\n})\nexport class TestTechniqueAutocompleteComponent implements ControlValueAccessor {\n\n  @Input() suggestions: any[] = [];\n  @Input() optionLabel = 'label';\n  @Input() placeholder = '';\n  @Input() emptyMessage = 'Aucun résultat trouvé';\n  @Input() dropdown = false;\n  @Input() inputId = `autocomplete-${Math.random().toString(36).substring(2)}`;\n\n  @Output() complete = new EventEmitter<any>();\n\n  value: any = null;\n  disabled = false;\n\n  private onChange = (value: any) => {};\n  private onTouched = () => {};\n\n  writeValue(value: any): void {\n    this.value = value;\n  }\n\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  setDisabledState(disabled: boolean): void {\n    this.disabled = disabled;\n  }\n\n  onModelChange(value: any): void {\n    this.value = value;\n    this.onChange(value);\n    this.onTouched();\n  }\n\n  onComplete(event: any): void {\n    this.complete.emit(event);\n  }\n}\n",
+            "sourceCode": "import {\n  Component,\n  forwardRef,\n  Input,\n  Output,\n  EventEmitter\n} from '@angular/core';\nimport {\n  NG_VALUE_ACCESSOR,\n  ControlValueAccessor\n} from '@angular/forms';\nimport { CommonModule } from '@angular/common';\nimport { FormsModule } from '@angular/forms';\nimport { AutoComplete } from 'primeng/autocomplete';\n\n@Component({\n  selector: 'app-test-technique-autocomplete',\n  standalone: true,\n  imports: [CommonModule, FormsModule, AutoComplete],\n  templateUrl: './test-technique-autocomplete.component.html',\n  styleUrls: ['./test-technique-autocomplete.component.scss'],\n  providers: [\n    {\n      // Register this component as a custom form control\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => TestTechniqueAutocompleteComponent),\n      multi: true\n    }\n  ]\n})\nexport class TestTechniqueAutocompleteComponent implements ControlValueAccessor {\n\n  // List of suggestions displayed by the autocomplete\n  @Input() suggestions: any[] = [];\n\n  // Property name used to display each option\n  @Input() optionLabel = 'label';\n\n  // Placeholder text inside the input field\n  @Input() placeholder = '';\n\n  // Message shown when no results are found\n  @Input() emptyMessage = 'Aucun résultat trouvé';\n\n  // Enables the dropdown icon to show all suggestions\n  @Input() dropdown = false;\n\n  // Unique input ID, especially useful for accessibility\n  @Input() inputId = `autocomplete-${Math.random().toString(36).substring(2)}`;\n\n  // Event emitted when autocomplete triggers a search (PrimeNG's completeMethod)\n  @Output() complete = new EventEmitter<any>();\n\n  // Current value of the input\n  value: any = null;\n\n  // Indicates whether the component is disabled\n  disabled = false;\n\n  // Functions assigned by Angular forms to handle value and touch events\n  private onChange = (value: any) => {};\n  private onTouched = () => {};\n\n  /**\n   * Called by Angular when the form sets a new value.\n   * Updates the component's internal value.\n   */\n  writeValue(value: any): void {\n    this.value = value;\n  }\n\n  /**\n   * Registers a callback function that Angular will call\n   * when the component's value changes.\n   */\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n  }\n\n  /**\n   * Registers a callback function that Angular will call\n   * when the input is marked as \"touched\".\n   */\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  /**\n   * Allows Angular to enable or disable the input programmatically.\n   */\n  setDisabledState(disabled: boolean): void {\n    this.disabled = disabled;\n  }\n\n  /**\n   * Triggered when the ngModel value changes (user input).\n   * Notifies Angular forms via onChange + onTouched.\n   */\n  onModelChange(value: any): void {\n    this.value = value;\n    this.onChange(value); // Notify form of new value\n    this.onTouched();     // Mark as touched\n  }\n\n  /**\n   * Called when the autocomplete's completeMethod fires.\n   * Emits the event upward so the parent component can fetch suggestions.\n   */\n  onComplete(event: any): void {\n    this.complete.emit(event);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2146,7 +2158,7 @@
                 ]
             },
             "extends": [],
-            "templateData": "<p-toast></p-toast>\n\n<p-table\n  [value]=\"value\"\n  [paginator]=\"paginator\"\n  [rows]=\"rows\"\n  [tableStyle]=\"{ 'min-width': '50rem' }\"\n>\n  <ng-template pTemplate=\"header\">\n    @for (col of columns; track $index) {\n    <th>{{ col.header }}</th>\n    }\n  </ng-template>\n\n  <ng-template pTemplate=\"body\" let-row>\n    <tr>\n      @for (col of columns; track $index) {\n      <td>\n        @if (col.action === 'maps') {\n        <ng-container>\n          <a\n            (click)=\"openMapWithDelay(row)\"\n            class=\"cursor-pointer\"\n            aria-label=\"Ouvrir {{ getValue(row, 'nom') }} dans Google Maps\"\n          >\n            <i class=\"pi pi-external-link map-icon\" aria-hidden=\"true\"></i>\n          </a>\n        </ng-container>\n        } @else {\n          {{ getValue(row, col.field) }}\n        }\n      </td>\n      }\n    </tr>\n  </ng-template>\n</p-table>\n"
+            "templateData": "<!-- Toast container for showing global messages and notifications -->\n<p-toast></p-toast>\n\n<!-- PrimeNG Table component -->\n<p-table\n  [value]=\"value\"\n  [paginator]=\"paginator\"\n  [rows]=\"rows\"\n  [tableStyle]=\"{ 'min-width': '50rem' }\"\n>\n  <!-- Table header template -->\n  <ng-template pTemplate=\"header\">\n    <!-- Loop through each column to render the header cells -->\n    @for (col of columns; track $index) {\n    <th>{{ col.header }}</th>\n    }\n  </ng-template>\n\n  <!-- Table body template -->\n  <ng-template pTemplate=\"body\" let-row>\n    <tr>\n      <!-- Loop through each column to render the data cells -->\n      @for (col of columns; track $index) {\n      <td>\n        <!-- If the column action is 'maps', render a clickable map icon -->\n        @if (col.action === 'maps') {\n        <ng-container>\n          <a\n            (click)=\"openMapWithDelay(row)\"\n            class=\"cursor-pointer\"\n            aria-label=\"Ouvrir {{ getValue(row, 'nom') }} dans Google Maps\"\n          >\n            <i class=\"pi pi-external-link map-icon\" aria-hidden=\"true\"></i>\n            <!-- Map icon -->\n          </a>\n        </ng-container>\n        } @else {\n        <!-- Otherwise, render the cell value dynamically -->\n        {{ getValue(row, col.field) }}\n        }\n      </td>\n      }\n    </tr>\n  </ng-template>\n</p-table>\n"
         }
     ],
     "modules": [
@@ -2784,7 +2796,7 @@
         ]
     },
     "coverage": {
-        "count": 13,
+        "count": 14,
         "status": "low",
         "files": [
             {
@@ -2923,9 +2935,9 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "TestTechniqueAutocompleteComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/18",
-                "status": "low"
+                "coveragePercent": 33,
+                "coverageCount": "6/18",
+                "status": "medium"
             },
             {
                 "filePath": "src/app/shared/components/test-technique-chips/test-technique-chips.component.ts",

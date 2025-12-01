@@ -133,12 +133,23 @@ Pour lancer le projet :
 
 ### Lancer les tests
 
-1. Lancer Jasmine :
+1. Lancer StoryBook :
+   ```sh
+   npm run storybook
+   ```
+
+2. Ouvrir dans le navigateur : 
+   ```sh
+   http://localhost:6006/
+   ```
+
+
+3. Lancer Jasmine :
    ```sh
    npm run test
    ```
 
-2. Ouvrir dans le navigateur : 
+4. Ouvrir dans le navigateur : 
    ```sh
    http://localhost:9876/?id=2369937
    ```
